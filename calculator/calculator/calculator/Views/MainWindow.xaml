@@ -12,46 +12,47 @@
             <Setter Property="Width" Value="55"/>
         </Style>
     </Window.Resources>
-    <StackPanel Orientation="Horizontal">
+    <StackPanel Orientation="Horizontal" Cursor="">
         <StackPanel>
-            <TextBlock 
-                IsEnabled="False" 
+            <TextBox 
+                x:Name="inputField"
+                IsEnabled="True" 
                 Background="#c8d4e6" 
                 TextAlignment="Right"
                 Padding="15"
                 Height="60"
-                Text="asdsad"
-                Style="{StaticResource MaterialDesignButtonTextBlock}" 
+                MaxWidth="260"
+                FontSize="20"
                 />
             <StackPanel>
             <StackPanel Orientation="Horizontal">
                 <Button Content="f( )" Margin="5" Click="ShowAddFunction"/>
                 <Button Content="var" Margin="5"  Click="ShowAddVariable"/>
-                <Button Content="AC" Margin="5"/>
-                <Button Content="🗑️" Margin="5"/>
+                <Button Content="AC" Margin="5" Click="clearFieldButton_Click"/>
+                <Button Content="/" Margin="5" Click="operationButton_Click"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
-                <Button Content="1" Margin="5"/>
-                <Button Content="2" Margin="5"/>
-                <Button Content="3" Margin="5"/>
-                <Button Content="*" Margin="5"/>
+                <Button Content="1" Margin="5" Click="numberButton_Click"/>
+                <Button Content="2" Margin="5" Click="numberButton_Click"/>
+                <Button Content="3" Margin="5" Click="numberButton_Click"/>
+                <Button Content="*" Margin="5" Click="operationButton_Click" />
             </StackPanel>
             <StackPanel Orientation="Horizontal">
-                <Button Content="4" Margin="5"/>
-                <Button Content="5" Margin="5"/>
-                <Button Content="6" Margin="5"/>
-                <Button Content="-" Margin="5"/>
+                <Button Content="4" Margin="5" Click="numberButton_Click"/>
+                <Button Content="5" Margin="5" Click="numberButton_Click"/>
+                <Button Content="6" Margin="5" Click="numberButton_Click"/>
+                <Button Content="-" Margin="5" Click="operationButton_Click"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
-                <Button Content="7" Margin="5"/>
-                <Button Content="8" Margin="5"/>
-                <Button Content="9" Margin="5"/>
-                <Button Content="+" Margin="5"/>
+                <Button Content="7" Margin="5" Click="numberButton_Click"/>
+                <Button Content="8" Margin="5" Click="numberButton_Click"/>
+                <Button Content="9" Margin="5" Click="numberButton_Click"/>
+                <Button Content="+" Margin="5" Click="operationButton_Click"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <Button Content="+/-" Margin="5"/>
-                <Button Content="0" Margin="5"/>
-                <Button Content="," Margin="5"/>
+                <Button Content="0" Margin="5" Click="numberButton_Click" Cursor="Hand"/>
+                <Button Content="." Margin="5" Click="operationButton_Click"/>
                 <Button Content="=" Margin="5" Style="{StaticResource MaterialDesignFlatMidBgButton}" Width="55"/>
             </StackPanel>
         </StackPanel>
