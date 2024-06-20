@@ -23,5 +23,13 @@ namespace calculator.Views
         {
             InitializeComponent();
         }
+
+        private void createNewVariableClick(object sender, RoutedEventArgs e)
+        {
+            DataVault.addVariable(variableName.Text, Convert.ToDouble(variableValue.Text));
+            
+            MessageBox.Show($"{variableName.Text} + {variableValue.Text}");
+            
+        }
     }
 }

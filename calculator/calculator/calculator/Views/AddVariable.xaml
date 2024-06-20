@@ -9,13 +9,13 @@
     <StackPanel>
         <Border Padding="10">
             <StackPanel>
-                <TextBlock Text="Variable name:"/>
-                <TextBox Margin="0 5" Text=""/>
+                <TextBlock Text="Variable name:" />
+                <TextBox Margin="0 5" Text="" x:Name="variableName" />
              
                 <TextBlock Text="Variable value:"/>
-                <TextBox Margin="0 5" Text=""/>
+                <TextBox Margin="0 5" Text="" x:Name="variableValue"/>
                 
-                <Button Content="Add variable"/>
+                <Button Content="Add variable" Click="createNewVariableClick" />
             </StackPanel>
         </Border>
     </StackPanel>
