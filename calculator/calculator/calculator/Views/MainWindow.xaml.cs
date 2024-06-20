@@ -23,38 +23,61 @@ namespace calculator
     public class Variable
     {
         public string Name { get; set; }
-        public string Value { get; set; }
+        public double Value { get; set; }
+    }
+
+    public class Function
+    {
+        public string Name { get; set; }
+        public string Expression { get; set; }
     }
 
     public static class DataVault
     {
-        private static Dictionary<string, double> variables;
-        private static Dictionary<string, string> functions;
-        private static ObservableCollection<Variable> variablesList;
+        private static ObservableCollection<Variable> variables;
+        private static ObservableCollection<Function> functions;
 
         static DataVault()
         {
-            variables = new Dictionary<string, double>();
-            functions = new Dictionary<string, string>();
-            variablesList = new ObservableCollection<Variable>();
+            variables = new ObservableCollection<Variable>();
+            functions = new ObservableCollection<Function>();
         }
 
         public static void addVariable(string variableName, double variableValue)
         {
-            variables.Add(variableName, variableValue);
-            variablesList.Add(new Variable { Name = variableName, Value = variableValue.ToString() });
+            var existingVariable = variables.FirstOrDefault(v => v.Name == variableName);
+            if (existingVariable != null)
+            {
+                existingVariable.Value = variableValue;
+            }
+            else
+            {
+                variables.Add(new Variable { Name = variableName, Value = variableValue });
+            }
         }
 
         public static void AddFunction(string functionName, string functionExpression)
         {
-            functions.Add(functionName, functionExpression);
+            var existingFunction = functions.FirstOrDefault(f => f.Name == functionName);
+            if (existingFunction != null)
+            {
+                existingFunction.Expression = functionExpression;
+            }
+            else
+            {
+                functions.Add(new Function { Name = functionName, Expression = functionExpression });
+            }
         }
 
-        public static ObservableCollection<Variable> getVariablesList()
+        public static ObservableCollection<Variable> getVariables()
         {
-            return variablesList;
+            return variables;
         }
 
+        public static ObservableCollection<Function> GetFunctions()
+        {
+            return functions;
+        }
     }
     
     public partial class MainWindow : Window
@@ -63,7 +86,7 @@ namespace calculator
         {
             InitializeComponent();
             DataVault.addVariable("xd", 1.23);
-            variablesView.ItemsSource = DataVault.getVariablesList();
+            variablesView.ItemsSource = DataVault.getVariables();
         }
 
         private void showAddFunctionMenu(object sender, RoutedEventArgs e)

@@ -15,7 +15,7 @@
                 <TextBlock Text="Variable value:"/>
                 <TextBox Margin="0 5" Text="" x:Name="variableValue"/>
                 
-                <Button Content="Add variable" Click="createNewVariable" />
+                <Button Content="Add variable" Click="createNewVariableClick" />
             </StackPanel>
         </Border>
     </StackPanel>

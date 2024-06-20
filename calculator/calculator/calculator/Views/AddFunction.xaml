@@ -30,7 +30,7 @@
                 <TextBlock Text="Function:"/>
                 <TextBox Margin="0 5" Text="f(x) = "/>
 
-                <Button Content="Add function"/>
+                <Button Content="Add function" Click="createNewFunctionClick"/>
             </StackPanel>
         </Border>
     </StackPanel>
