@@ -15,13 +15,21 @@ using System.Windows.Shapes;
 namespace calculator.Views
 {
     /// <summary>
-    /// Логика взаимодействия для AddVariable.xaml
+    /// Логика взаимодействия для addVariable.xaml
     /// </summary>
     public partial class AddVariable : Window
     {
         public AddVariable()
         {
             InitializeComponent();
+        }
+
+        private void createNewVariable(object sender, RoutedEventArgs e)
+        {
+            DataVault.addVariable(variableName.Text, Convert.ToDouble(variableValue.Text));
+            
+            MessageBox.Show($"{variableName.Text} + {variableValue.Text}");
+            
         }
     }
 }

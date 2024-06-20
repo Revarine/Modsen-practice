@@ -26,8 +26,8 @@
                 />
             <StackPanel>
             <StackPanel Orientation="Horizontal">
-                <Button Content="f( )" Margin="5" Click="ShowAddFunction"/>
-                <Button Content="var" Margin="5"  Click="ShowAddVariable"/>
+                <Button Content="f( )" Margin="5" Click="showAddFunctionMenu"/>
+                <Button Content="var" Margin="5"  Click="showAddVariableMenu"/>
                 <Button Content="AC" Margin="5"/>
                 <Button Content="🗑️" Margin="5"/>
             </StackPanel>
@@ -101,6 +101,15 @@
                                  Text="It's still empty here ☹️" 
                                  TextAlignment="Center"
                                  Style="{StaticResource MaterialDesignBody1TextBlock}"/>
+                            <ListView x:Name="variablesView">
+                                <ListView.View>
+                                    <GridView>
+                                        <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}" />
+                                        <GridViewColumn Header="Value" DisplayMemberBinding="{Binding Value}" />
+                                    </GridView>
+                                </ListView.View>
+                            </ListView>
+
                         </StackPanel>
                     </TabItem.Content>
                 </TabItem>
