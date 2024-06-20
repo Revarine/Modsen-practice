@@ -12,6 +12,9 @@ using System.Windows.Shapes;
 using System.Collections;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.Data;
+using calculator.ParserF;
+using static MaterialDesignThemes.Wpf.Theme;
 
 namespace calculator
 {
@@ -82,11 +85,32 @@ namespace calculator
     
     public partial class MainWindow : Window
     {
+        private readonly Parser parser = new Parser();
+        private readonly Computations computations = new Computations();
+
         public MainWindow()
         {
             InitializeComponent();
             DataVault.addVariable("xd", 1.23);
             variablesView.ItemsSource = DataVault.getVariables();
+        }
+
+        private void Calculate_Click( object sender, RoutedEventArgs e )
+        {
+            try
+            {
+                var input = inputField.Text;
+                var expression = parser.Parse(input);
+                //Console.WriteLine($"Parsed Expression Tree: {expression}");
+                var result = computations.Calculate(expression);
+
+                inputField.Text = $"{result}";
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка: {ex.Message}");
+            }
         }
 
         private void showAddFunctionMenu(object sender, RoutedEventArgs e)
@@ -100,7 +124,7 @@ namespace calculator
 
         private void numberButton_Click(object sender, RoutedEventArgs e)
         {
-            Button clickedButton = sender as Button;
+            System.Windows.Controls.Button clickedButton = sender as System.Windows.Controls.Button;
             if (clickedButton != null)
             {
                 inputField.Text += clickedButton.Content.ToString();
@@ -117,7 +141,7 @@ namespace calculator
 
         private void operationButton_Click(object sender, RoutedEventArgs e)
         {
-            Button clickedButton = sender as Button;
+            System.Windows.Controls.Button clickedButton = sender as System.Windows.Controls.Button;
             if (clickedButton != null)
             {
                 string operation = clickedButton.Content.ToString();
@@ -149,5 +173,10 @@ namespace calculator
                 inputField.SelectionLength = 0;
             }
         }
+
+
+
+
+
     }
 }
