@@ -43,7 +43,6 @@ namespace calculator
         {
             variables.Add(variableName, variableValue);
             variablesList.Add(new Variable { Name = variableName, Value = variableValue.ToString() });
-            OnVariablesChanged();
         }
 
         public static void AddFunction(string functionName, string functionExpression)
@@ -56,11 +55,6 @@ namespace calculator
             return variablesList;
         }
 
-        private static void OnVariablesChanged()
-        {
-            // Raise an event or notify the UI that the variables list has changed
-            // This will trigger the ListView to update its contents
-        }
     }
     
     public partial class MainWindow : Window

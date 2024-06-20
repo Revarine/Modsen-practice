@@ -15,7 +15,7 @@ using System.Windows.Shapes;
 namespace calculator.Views
 {
     /// <summary>
-    /// Логика взаимодействия для addVariable.xaml
+    /// Логика взаимодействия для AddVariable.xaml
     /// </summary>
     public partial class AddVariable : Window
     {
