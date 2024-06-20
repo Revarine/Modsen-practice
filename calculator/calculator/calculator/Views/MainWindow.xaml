@@ -14,14 +14,15 @@
     </Window.Resources>
     <StackPanel Orientation="Horizontal">
         <StackPanel>
-            <TextBlock 
-                IsEnabled="False" 
+            <TextBox 
+                IsEnabled="True" 
                 Background="#c8d4e6" 
                 TextAlignment="Right"
                 Padding="15"
                 Height="60"
-                Text="asdsad"
-                Style="{StaticResource MaterialDesignButtonTextBlock}" 
+                FontSize="20"
+                MaxWidth="250"
+                Style="{StaticResource MaterialDesignTextBox}" 
                 />
             <StackPanel>
             <StackPanel Orientation="Horizontal">
