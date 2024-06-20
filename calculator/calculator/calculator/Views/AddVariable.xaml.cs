@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -11,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using calculator.DataVault;
 
 namespace calculator.Views
 {
@@ -26,10 +28,21 @@ namespace calculator.Views
 
         private void createNewVariableClick(object sender, RoutedEventArgs e)
         {
-            DataVault.addVariable(variableName.Text, Convert.ToDouble(variableValue.Text));
+            bool isValid = Regex.IsMatch(variableName.Text, @"^[a-zA-Z]+$");
+            if (!isValid)
+            {
+                MessageBox.Show("В названии переменной могуть быть только буквы");
+                return;
+            }
+
+            isValid = Regex.IsMatch(variableValue.Text, @"^\d+(\.\d+)?$");
+            if (!isValid)
+            {
+                MessageBox.Show("Переменная должна иметь целое или дробное значение(разделитель: \".\")");
+                return;
+            }
             
-            MessageBox.Show($"{variableName.Text} + {variableValue.Text}");
-            
+            DataVault.DataVault.addVariable(variableName.Text, Convert.ToDouble(variableValue.Text));
         }
     }
 }

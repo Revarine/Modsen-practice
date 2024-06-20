@@ -93,10 +93,6 @@
                     </TabItem.Header>
                     <TabItem.Content>
                         <StackPanel>
-                            <TextBlock 
-                                 Text="It's still empty here ☹️" 
-                                 TextAlignment="Center"
-                                 Style="{StaticResource MaterialDesignBody1TextBlock}"/>
                             <ListView x:Name="variablesView">
                                 <ListView.View>
                                     <GridView>
