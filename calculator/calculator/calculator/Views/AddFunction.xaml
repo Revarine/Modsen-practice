@@ -4,35 +4,28 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:calculator.Views"
-        mc:Ignorable="d"  WindowStartupLocation="CenterScreen"
-        Title="Add function" Height="250" Width="300">
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        Title="Add Function" Height="250" Width="300">
     <StackPanel>
         <Border Padding="10">
             <StackPanel>
-                <StackPanel Orientation="Horizontal" >
-                    <TextBlock 
-                        Text="Add a parameter:" 
-                        TextAlignment="Center" 
-                        Style="{StaticResource MaterialDesignBody1TextBlock}"/>
-                    <TextBox 
-                        Text="y"
-                        Margin="10 0"
-                        Width="50"
-                        TextAlignment="Center"
-                        Style="{StaticResource MaterialDesignTextBoxBase}"
-                    />
-                    <Button 
-                        Content="Add" 
-                        
-                        Style="{StaticResource MaterialDesignFlatButton}"
-                    />
-                </StackPanel>
                 <TextBlock Text="Function Name:"/>
-                <TextBox Margin="0 5" Style="{StaticResource MaterialDesignTextBox}"/>
-                <TextBlock Text="Function Expression:"/>
-                <TextBox Margin="0 5" Style="{StaticResource MaterialDesignTextBox}"/>
+                <TextBox x:Name="FunctionNameTextBox" Margin="0 5" Style="{StaticResource MaterialDesignTextBox}"/>
+                
+                <TextBlock Text="Add a Parameter:"/>
+                <StackPanel Orientation="Horizontal">
+                    <TextBox x:Name="ParameterTextBox" Margin="10 0" Width="50" Style="{StaticResource MaterialDesignTextBoxBase}"/>
+                    <Button Content="Add" Click="AddParameterClick" Style="{StaticResource MaterialDesignFlatButton}"/>
+                </StackPanel>
 
-                <Button Content="Add function" Click="createNewFunctionClick"/>
+                <TextBlock Text="Parameters:"/>
+                <ListBox x:Name="ParametersListBox" Margin="0 5" Style="{StaticResource MaterialDesignListBox}"/>
+
+                <TextBlock Text="Function Expression:"/>
+                <TextBox x:Name="FunctionExpressionTextBox" Margin="0 5" Style="{StaticResource MaterialDesignTextBox}"/>
+
+                <Button Content="Add Function" Click="CreateNewFunctionClick"/>
             </StackPanel>
         </Border>
     </StackPanel>

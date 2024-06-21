@@ -1,33 +1,46 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.ObjectModel;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+using calculator.DataVault;
 
 namespace calculator.Views
 {
-    /// <summary>
-    /// Логика взаимодействия для AddFunction.xaml
-    /// </summary>
     public partial class AddFunction : Window
     {
+        private ObservableCollection<Parameter> parameters;
+
         public AddFunction()
         {
             InitializeComponent();
+            parameters = new ObservableCollection<Parameter>();
+            ParametersListBox.ItemsSource = parameters;
         }
 
-        private void createNewFunctionClick(object sender, RoutedEventArgs e)
+        private void AddParameterClick(object sender, RoutedEventArgs e)
         {
-            DataVault.DataVault.addFunction("nameplaceholder", "expressionplaceholder");
-            MessageBox.Show("In progress");
+            if (!string.IsNullOrWhiteSpace(ParameterTextBox.Text))
+            {
+                parameters.Add(new Parameter { Name = ParameterTextBox.Text });
+                ParameterTextBox.Clear();
+            }
+            else
+            {
+                MessageBox.Show("Parameter name cannot be empty.");
+            }
+        }
+
+        private void CreateNewFunctionClick(object sender, RoutedEventArgs e)
+        {
+            string functionName = FunctionNameTextBox.Text;
+            string functionExpression = FunctionExpressionTextBox.Text;
+
+            if (string.IsNullOrWhiteSpace(functionName) || string.IsNullOrWhiteSpace(functionExpression))
+            {
+                MessageBox.Show("Function name and expression cannot be empty.");
+                return;
+            }
+
+            DataVault.DataVault.AddFunction(functionName, functionExpression, parameters);
+            this.Close();
         }
     }
 }

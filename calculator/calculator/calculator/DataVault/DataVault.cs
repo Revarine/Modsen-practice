@@ -1,5 +1,4 @@
 using System.Collections.ObjectModel;
-using System.Text.RegularExpressions;
 using System.Windows;
 
 namespace calculator.DataVault
@@ -9,16 +8,20 @@ namespace calculator.DataVault
         public string Name { get; set; }
         public double Value { get; set; }
     }
+    public class Parameter
+    {
+        public string Name { get; set; }
+    }
 
     public class Function
     {
-        public string name { get; set; }
-        public Func<double[], double> function { get; set; }
+        public string Name { get; set; }
+        public string Expression { get; set; }
+        public ObservableCollection<Parameter> Parameters { get; set; }
 
-        public Function(string name, Func<double[], double> function)
+        public Function()
         {
-            this.name = name;
-            this.function = function;
+            Parameters = new ObservableCollection<Parameter>();
         }
     }
 
@@ -33,7 +36,7 @@ namespace calculator.DataVault
             functions = new ObservableCollection<Function>();
         }
 
-        public static void addVariable(string variableName, double variableValue)
+        public static void AddVariable(string variableName, double variableValue)
         {
             var existingVariable = variables.FirstOrDefault(v => v.Name == variableName);
             if (existingVariable != null)
@@ -47,13 +50,22 @@ namespace calculator.DataVault
             }
         }
 
-        public static void addFunction(Function function)
+        public static void AddFunction(string functionName, string functionExpression, ObservableCollection<Parameter> parameters)
         {
-            functions.Add(function);
-            MessageBox.Show("Успех!!!");
+            var existingFunction = functions.FirstOrDefault(f => f.Name == functionName);
+            if (existingFunction != null)
+            {
+                MessageBox.Show("Функция будет изменена на новую");
+                existingFunction.Expression = functionExpression;
+                existingFunction.Parameters = parameters;
+            }
+            else
+            {
+                functions.Add(new Function { Name = functionName, Expression = functionExpression, Parameters = parameters });
+            }
         }
 
-        public static ObservableCollection<Variable> getVariables()
+        public static ObservableCollection<Variable> GetVariables()
         {
             return variables;
         }

@@ -42,7 +42,7 @@ namespace calculator.Views
                 return;
             }
             
-            DataVault.DataVault.addVariable(variableName.Text, Convert.ToDouble(variableValue.Text));
+            DataVault.DataVault.AddVariable(variableName.Text, Convert.ToDouble(variableValue.Text));
         }
     }
 }
