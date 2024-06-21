@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:calculator.Views"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
-        Title="Add Function" Height="250" Width="300">
+        Title="Add Function" Height="250" Width="300"
+        SizeToContent="Height">
     <StackPanel>
         <Border Padding="10">
             <StackPanel>
@@ -20,7 +21,7 @@
                 </StackPanel>
 
                 <TextBlock Text="Parameters:"/>
-                <ListBox x:Name="ParametersListBox" Margin="0 5" Style="{StaticResource MaterialDesignListBox}"/>
+                <ListBox x:Name="ParametersListBox" Margin="0 5" Style="{StaticResource MaterialDesignListBox}" DisplayMemberPath="Name"/>
 
                 <TextBlock Text="Function Expression:"/>
                 <TextBox x:Name="FunctionExpressionTextBox" Margin="0 5" Style="{StaticResource MaterialDesignTextBox}"/>

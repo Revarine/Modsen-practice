@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Text.RegularExpressions;
 using System.Windows;
 using calculator.DataVault;
 
@@ -24,7 +25,7 @@ namespace calculator.Views
             }
             else
             {
-                MessageBox.Show("Parameter name cannot be empty.");
+                MessageBox.Show("Параметр не может быть пустым.");
             }
         }
 
@@ -32,10 +33,15 @@ namespace calculator.Views
         {
             string functionName = FunctionNameTextBox.Text;
             string functionExpression = FunctionExpressionTextBox.Text;
-
+            bool isValid = Regex.IsMatch(functionName, @"^[a-zA-Z][a-zA-Z0-9]*$");
+            if (!isValid)
+            {
+                MessageBox.Show("В названии функции могуть быть только буквы или цифры, начинаться оно должно с буквы.");
+                return;
+            }
             if (string.IsNullOrWhiteSpace(functionName) || string.IsNullOrWhiteSpace(functionExpression))
             {
-                MessageBox.Show("Function name and expression cannot be empty.");
+                MessageBox.Show("Название функции или выражение функции не может быть пустым.");
                 return;
             }
 
