@@ -12,8 +12,14 @@ namespace calculator.DataVault
 
     public class Function
     {
-        public string Name { get; set; }
-        public string Expression { get; set; }
+        public string name { get; set; }
+        public Func<double[], double> function { get; set; }
+
+        public Function(string name, Func<double[], double> function)
+        {
+            this.name = name;
+            this.function = function;
+        }
     }
 
     public static class DataVault
@@ -41,18 +47,10 @@ namespace calculator.DataVault
             }
         }
 
-        public static void addFunction(string functionName, string functionExpression)
+        public static void addFunction(Function function)
         {
-            var existingFunction = functions.FirstOrDefault(f => f.Name == functionName);
-            if (existingFunction != null)
-            {
-                MessageBox.Show("Функция будет изменена на новую");
-                existingFunction.Expression = functionExpression;
-            }
-            else
-            {
-                functions.Add(new Function { Name = functionName, Expression = functionExpression });
-            }
+            functions.Add(function);
+            MessageBox.Show("Успех!!!");
         }
 
         public static ObservableCollection<Variable> getVariables()

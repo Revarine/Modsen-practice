@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:calculator.Views"
         mc:Ignorable="d"  WindowStartupLocation="CenterScreen"
-        Title="Add function" Height="170" Width="300">
+        Title="Add function" Height="250" Width="300">
     <StackPanel>
         <Border Padding="10">
             <StackPanel>
@@ -27,8 +27,10 @@
                         Style="{StaticResource MaterialDesignFlatButton}"
                     />
                 </StackPanel>
-                <TextBlock Text="Function:"/>
-                <TextBox Margin="0 5" Text="f(x) = "/>
+                <TextBlock Text="Function Name:"/>
+                <TextBox Margin="0 5" Style="{StaticResource MaterialDesignTextBox}"/>
+                <TextBlock Text="Function Expression:"/>
+                <TextBox Margin="0 5" Style="{StaticResource MaterialDesignTextBox}"/>
 
                 <Button Content="Add function" Click="createNewFunctionClick"/>
             </StackPanel>

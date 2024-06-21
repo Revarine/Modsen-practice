@@ -37,6 +37,7 @@ namespace calculator
             Thread.CurrentThread.CurrentUICulture = new CultureInfo("en-US");
             InitializeComponent();
             variablesView.ItemsSource = DataVault.DataVault.getVariables();
+            
         }
 
         private void Calculate_Click(object sender, RoutedEventArgs e)
