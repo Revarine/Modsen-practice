@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace calculator.ParserF
 {
@@ -14,8 +12,7 @@ namespace calculator.ParserF
         public Expression Parse( string input )
         {
             var lexer = new Lexer();
-
-            tokens = lexer.Tokenize(input);// Получение списка токенов из входной строки
+            tokens = lexer.Tokenize(input);
             position = 0;
 
             Console.WriteLine("Tokens:");
@@ -28,7 +25,7 @@ namespace calculator.ParserF
             return ParseExpression();
         }
 
-        private Expression ParseExpression() // парсит сложение и вычитание
+        private Expression ParseExpression()
         {
             var left = ParseTerm();
 
@@ -44,7 +41,7 @@ namespace calculator.ParserF
             return left;
         }
 
-        private Expression ParseTerm() // для умножения и деления
+        private Expression ParseTerm()
         {
             var left = ParseOperand();
 
@@ -69,6 +66,13 @@ namespace calculator.ParserF
                 return numberExpr;
             }
 
+            if (tokens[position].Type == Token.TokenType.Identifier)
+            {
+                var identifierExpr = new VariableExpression(tokens[position++].Value);
+                Console.WriteLine($"Parsed Identifier: {identifierExpr}");
+                return identifierExpr;
+            }
+
             if (tokens[position].Type == Token.TokenType.LeftParen)
             {
                 position++;
@@ -81,7 +85,6 @@ namespace calculator.ParserF
 
                 position++;
                 return expr;
-
             }
 
             throw new Exception("Unexpected token: " + tokens[position].Value);

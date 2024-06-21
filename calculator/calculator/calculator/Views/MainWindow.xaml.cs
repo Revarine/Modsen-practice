@@ -91,7 +91,6 @@ namespace calculator
         public MainWindow()
         {
             InitializeComponent();
-            DataVault.addVariable("xd", 1.23);
             variablesView.ItemsSource = DataVault.getVariables();
         }
 

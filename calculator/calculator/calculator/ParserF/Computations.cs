@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace calculator.ParserF
 {
@@ -13,6 +10,15 @@ namespace calculator.ParserF
             if (expression is NumberExpression numberExpr)
             {
                 return numberExpr.Value;
+            }
+            if (expression is VariableExpression variableExpr)
+            {
+                var variable = DataVault.getVariables().FirstOrDefault(v => v.Name == variableExpr.Name);
+                if (variable == null)
+                {
+                    throw new Exception($"Variable not found: {variableExpr.Name}");
+                }
+                return variable.Value;
             }
             if (expression is BinaryExpression binaryExpr)
             {
@@ -32,7 +38,6 @@ namespace calculator.ParserF
                     default:
                         throw new Exception("Unknown operator: " + binaryExpr.Operator);
                 }
-
             }
             throw new Exception("Unknown expression type");
         }
