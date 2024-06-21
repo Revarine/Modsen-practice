@@ -27,7 +27,8 @@ namespace calculator.Views
         private void createNewFunctionClick(object sender, RoutedEventArgs e)
         {
             DataVault.AddFunction("nameplaceholder", "expressionplaceholder");
-            MessageBox.Show("In progress");
+            //MessageBox.Show("In progress");
+            new ResultWindow("In progress").ShowDialog();
         }
     }
 }
