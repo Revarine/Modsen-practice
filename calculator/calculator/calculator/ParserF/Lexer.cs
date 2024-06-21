@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace calculator.ParserF
 {
@@ -16,25 +13,31 @@ namespace calculator.ParserF
             var matches = tokenPattern.Matches(input);
             var tokens = new List<Token>();
 
-            foreach (Match match in matches)
+            for (int i = 0; i < matches.Count; i++)
             {
-                var value = match.Value;
+                var value = matches[i].Value;
+
+                if (value == "-" && (i == 0 || "+-*/(".Contains(matches[i - 1].Value)))
+                {
+                    if (i + 1 < matches.Count && double.TryParse(matches[i + 1].Value, out _))//отрицательное число-объединяем с следующим числом
+                    {
+                        value += matches[i + 1].Value;
+                        i++;
+                    }
+                }
 
                 if (double.TryParse(value, out _))
                 {
                     tokens.Add(new Token(Token.TokenType.Number, value));
                 }
-
                 else if ("+-*/".Contains(value))
                 {
                     tokens.Add(new Token(Token.TokenType.Operator, value));
                 }
-
                 else if (value == "(")
                 {
                     tokens.Add(new Token(Token.TokenType.LeftParen, value));
                 }
-
                 else if (value == ")")
                 {
                     tokens.Add(new Token(Token.TokenType.RightParen, value));
@@ -43,6 +46,5 @@ namespace calculator.ParserF
 
             return tokens;
         }
-
     }
 }
