@@ -54,7 +54,7 @@ namespace calculator
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Ошибка: {ex.Message}");
+                MessageBox.Show($"Error: {ex.Message}");
             }
         }
 

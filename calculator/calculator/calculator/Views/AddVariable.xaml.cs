@@ -28,17 +28,17 @@ namespace calculator.Views
 
         private void createNewVariableClick(object sender, RoutedEventArgs e)
         {
-            bool isValid = Regex.IsMatch(variableName.Text, @"^[a-zA-Z][a-zA-Z0-9]*$");
+            var isValid = Regex.IsMatch(variableName.Text, @"^[a-zA-Z][a-zA-Z0-9]*$");
             if (!isValid)
             {
-                MessageBox.Show("В названии переменной могуть быть только буквы или цифры, начинаться оно должно с буквы.");
+                MessageBox.Show("Variable name can only start with english letter and contain letters or numbers in it.");
                 return;
             }
 
             isValid = Regex.IsMatch(variableValue.Text, @"^(\-)?\d+(\.\d+)?$");
             if (!isValid)
             {
-                MessageBox.Show("Переменная должна иметь целое или дробное значение(разделитель: \".\")");
+                MessageBox.Show("The variable must have an integer or decimal value (decimal separator: \".\")");
                 return;
             }
             

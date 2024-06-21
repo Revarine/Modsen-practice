@@ -142,7 +142,7 @@ namespace calculator.DataVault
             var existingVariable = variables.FirstOrDefault(v => v.Name == variableName);
             if (existingVariable != null)
             {
-                MessageBox.Show("Переменная будет изменена на новую");
+                MessageBox.Show("Variable value is changed successfully!");
                 existingVariable.Value = variableValue;
             }
             else
@@ -156,7 +156,7 @@ namespace calculator.DataVault
             var existingFunction = functions.FirstOrDefault(f => f.Name == functionName);
             if (existingFunction != null)
             {
-                MessageBox.Show("Функция будет изменена на новую");
+                MessageBox.Show("Function values is changed successfully!");
                 existingFunction.Expression = functionExpression;
                 existingFunction.Parameters = parameters;
             }

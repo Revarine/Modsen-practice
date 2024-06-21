@@ -25,23 +25,23 @@ namespace calculator.Views
             }
             else
             {
-                MessageBox.Show("Параметр не может быть пустым.");
+                MessageBox.Show("Function parameter can't be empty.");
             }
         }
 
         private void CreateNewFunctionClick(object sender, RoutedEventArgs e)
         {
-            string functionName = FunctionNameTextBox.Text;
-            string functionExpression = FunctionExpressionTextBox.Text;
-            bool isValid = Regex.IsMatch(functionName, @"^[a-zA-Z][a-zA-Z0-9]*$");
+            var functionName = FunctionNameTextBox.Text;
+            var functionExpression = FunctionExpressionTextBox.Text;
+            var isValid = Regex.IsMatch(functionName, @"^[a-zA-Z][a-zA-Z0-9]*$");
             if (!isValid)
             {
-                MessageBox.Show("В названии функции могуть быть только буквы или цифры, начинаться оно должно с буквы.");
+                MessageBox.Show("Function name can only start with english letter and contain letters or numbers in it.");
                 return;
             }
             if (string.IsNullOrWhiteSpace(functionName) || string.IsNullOrWhiteSpace(functionExpression))
             {
-                MessageBox.Show("Название функции или выражение функции не может быть пустым.");
+                MessageBox.Show("Function name or function expression can't be empty.");
                 return;
             }
 
