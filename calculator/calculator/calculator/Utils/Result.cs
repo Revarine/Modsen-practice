@@ -8,8 +8,8 @@ namespace calculator.Utils
 {
     internal class Result<T>
     {
-        private T Value { get; set; }
-        private string? Error { get; set; }
+        public T Value { get; set; }
+        public string? Error { get; set; }
 
         public Result(T Value) 
         {
