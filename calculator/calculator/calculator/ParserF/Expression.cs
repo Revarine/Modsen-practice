@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace calculator.ParserF
+﻿namespace calculator.ParserF
 {
     public abstract class Expression { }
 
-    public class NumberExpression : Expression 
+    public class NumberExpression : Expression
     {
         public double Value { get; }
         public NumberExpression( double value )
@@ -22,22 +16,36 @@ namespace calculator.ParserF
         }
     }
 
-    public class BinaryExpression : Expression //само выражение
+    public class BinaryExpression : Expression //Expression itself
     {
-        public Expression Left { get; }//левый операнд
-        public Expression Right { get; }//правый операнд
+        public Expression Left { get; } //left operand
+        public Expression Right { get; }//right operand
         public string Operator { get; }
 
         public BinaryExpression( Expression left, Expression right, string op )
         {
-            Left = left; 
+            Left = left;
             Right = right;
             Operator = op;
         }
 
         public override string ToString()
         {
-            return $"({Left} {Operator} {Right})"; // тут и строиться наше выражение прим. left= 2  right=1 operand=+ => 2+1
+            return $"({Left} {Operator} {Right})"; // Expression build example: left= 2  right=1 operand + => 2+1
+        }
+    }
+
+    public class VariableExpression : Expression
+    {
+        public string Name { get; }
+        public VariableExpression( string name )
+        {
+            Name = name;
+        }
+
+        public override string ToString()
+        {
+            return Name;
         }
     }
 }

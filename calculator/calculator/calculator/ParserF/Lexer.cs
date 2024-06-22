@@ -1,48 +1,54 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace calculator.ParserF
 {
     public class Lexer
     {
-        private static readonly Regex tokenPattern = new Regex(@"\d+(\.\d+)?|[+\-*/()]");
+        private static readonly Regex tokenPattern = new Regex(@"\d+(\.\d+)?|[a-zA-Z_][a-zA-Z0-9_]*|[+\-*/()]");
 
-        public List<Token> Tokenize( string input ) //находит совпадения с Regex и создает список токенов
+        public List<Token> Tokenize( string input ) //finds matches with Regex and creates a list of tokens
         {
             var matches = tokenPattern.Matches(input);
             var tokens = new List<Token>();
 
-            foreach (Match match in matches)
+            for (int i = 0; i < matches.Count; i++)
             {
-                var value = match.Value;
+                var value = matches[i].Value;
+
+                if (value == "-" && (i == 0 || "+-*/(".Contains(matches[i - 1].Value))) //checking  negative number
+                {
+                    if (i + 1 < matches.Count && double.TryParse(matches[i + 1].Value, out _))
+                    {
+                        value += matches[i + 1].Value;
+                        i++;
+                    }
+                }
 
                 if (double.TryParse(value, out _))
                 {
-                    tokens.Add(new Token(Token.TokenType.Number, value));
+                    tokens.Add(new Token(TokenTypesEnum.TokenType.Number, value));
                 }
-
                 else if ("+-*/".Contains(value))
                 {
-                    tokens.Add(new Token(Token.TokenType.Operator, value));
+                    tokens.Add(new Token(TokenTypesEnum.TokenType.Operator, value));
                 }
-
                 else if (value == "(")
                 {
-                    tokens.Add(new Token(Token.TokenType.LeftParen, value));
+                    tokens.Add(new Token(TokenTypesEnum.TokenType.LeftParen, value));
                 }
-
                 else if (value == ")")
                 {
-                    tokens.Add(new Token(Token.TokenType.RightParen, value));
+                    tokens.Add(new Token(TokenTypesEnum.TokenType.RightParen, value));
+                }
+                else
+                {
+                    tokens.Add(new Token(TokenTypesEnum.TokenType.Identifier, value));
                 }
             }
 
             return tokens;
         }
-
     }
 }

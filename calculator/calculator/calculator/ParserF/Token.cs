@@ -1,33 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace calculator.ParserF
+﻿namespace calculator.ParserF
 {
     public class Token
     {
-        public enum TokenType
-        { 
-            Number,
-            Operator,
-            LeftParen,
-            RightParen
-        }
+        public TokenTypesEnum.TokenType Type { get; }
+        public string Value { get; }
 
-        public TokenType Type{ get; set; }
-        public string Value { get; set; }
-
-        public Token( TokenType type, string value )
-        { 
-            Type = type; 
+        public Token( TokenTypesEnum.TokenType type, string value )
+        {
+            Type = type;
             Value = value;
         }
 
         public override string ToString()
         {
-            return $"{Type}('{Value}')";
+            return $"{Type}: {Value}";
         }
     }
 }
