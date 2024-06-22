@@ -16,9 +16,6 @@ using calculator.DataVault;
 
 namespace calculator.Views
 {
-    /// <summary>
-    /// Логика взаимодействия для AddVariable.xaml
-    /// </summary>
     public partial class AddVariable : Window
     {
         public AddVariable()

@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:calculator.Views"
         mc:Ignorable="d"  WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
         Title="Add variable" Height="190" Width="300">
     <StackPanel>
         <Border Padding="10">
