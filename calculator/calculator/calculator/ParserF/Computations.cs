@@ -14,7 +14,7 @@ namespace calculator.ParserF
 
             if (expression is VariableExpression variableExpr)
             {
-                var variable = DataVault.getVariables().FirstOrDefault(v => v.Name == variableExpr.Name);
+                var variable = DataVault.DataVault.GetVariables().FirstOrDefault(v => v.Name == variableExpr.Name);
                 
                 if (variable == null)
                 {
