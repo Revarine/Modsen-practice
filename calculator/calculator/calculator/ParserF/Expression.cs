@@ -16,10 +16,10 @@
         }
     }
 
-    public class BinaryExpression : Expression
+    public class BinaryExpression : Expression //Expression itself
     {
-        public Expression Left { get; }
-        public Expression Right { get; }
+        public Expression Left { get; } //left operand
+        public Expression Right { get; }//right operand
         public string Operator { get; }
 
         public BinaryExpression( Expression left, Expression right, string op )
@@ -31,7 +31,7 @@
 
         public override string ToString()
         {
-            return $"({Left} {Operator} {Right})";
+            return $"({Left} {Operator} {Right})"; // Expression build example: left= 2  right=1 operand + => 2+1
         }
     }
 

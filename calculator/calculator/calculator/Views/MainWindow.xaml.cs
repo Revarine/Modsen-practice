@@ -100,9 +100,7 @@ namespace calculator
             {
                 var input = inputField.Text;
                 var expression = parser.Parse(input);
-                //Console.WriteLine($"Parsed Expression Tree: {expression}");
                 var result = computations.Calculate(expression);
-
                 inputField.Text = $"{result}";
 
             }

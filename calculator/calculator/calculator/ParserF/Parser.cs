@@ -12,20 +12,12 @@ namespace calculator.ParserF
         public Expression Parse( string input )
         {
             var lexer = new Lexer();
-            tokens = lexer.Tokenize(input);
+            tokens = lexer.Tokenize(input);// geting token list
             position = 0;
-
-            Console.WriteLine("Tokens:");
-
-            foreach (var token in tokens)
-            {
-                Console.WriteLine(token);
-            }
-
             return ParseExpression();
         }
 
-        private Expression ParseExpression()
+        private Expression ParseExpression() 
         {
             var left = ParseTerm();
 
@@ -34,8 +26,6 @@ namespace calculator.ParserF
                 var op = tokens[position++].Value;
                 var right = ParseTerm();
                 left = new BinaryExpression(left, right, op);
-
-                Console.WriteLine($"Parsed Expression: {left}");
             }
 
             return left;
@@ -50,8 +40,6 @@ namespace calculator.ParserF
                 var op = tokens[position++].Value;
                 var right = ParseOperand();
                 left = new BinaryExpression(left, right, op);
-
-                Console.WriteLine($"Parsed Term: {left}");
             }
 
             return left;
@@ -59,35 +47,33 @@ namespace calculator.ParserF
 
         private Expression ParseOperand()
         {
-            if (tokens[position].Type == Token.TokenType.Number)
+            if (tokens[position].Type == TokenTypesEnum.TokenType.Number)
             {
                 var numberExpr = new NumberExpression(double.Parse(tokens[position++].Value));
-                Console.WriteLine($"Parsed Factor: {numberExpr}");
                 return numberExpr;
             }
 
-            if (tokens[position].Type == Token.TokenType.Identifier)
+            if (tokens[position].Type == TokenTypesEnum.TokenType.Identifier)
             {
                 var identifierExpr = new VariableExpression(tokens[position++].Value);
-                Console.WriteLine($"Parsed Identifier: {identifierExpr}");
                 return identifierExpr;
             }
 
-            if (tokens[position].Type == Token.TokenType.LeftParen)
+            if (tokens[position].Type == TokenTypesEnum.TokenType.LeftParen)
             {
                 position++;
                 var expr = ParseExpression();
 
-                if (tokens[position].Type != Token.TokenType.RightParen)
+                if (tokens[position].Type != TokenTypesEnum.TokenType.RightParen)
                 {
-                    throw new Exception("Missing closing parenthesis");
+                    throw new ParserExceptions("Missing closing parenthesis");
                 }
 
                 position++;
                 return expr;
             }
 
-            throw new Exception("Unexpected token: " + tokens[position].Value);
+            throw new ParserExceptions("Unexpected token: " + tokens[position].Value);
         }
     }
 }

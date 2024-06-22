@@ -11,12 +11,14 @@ namespace calculator.ParserF
             {
                 return numberExpr.Value;
             }
+
             if (expression is VariableExpression variableExpr)
             {
                 var variable = DataVault.getVariables().FirstOrDefault(v => v.Name == variableExpr.Name);
+                
                 if (variable == null)
                 {
-                    throw new Exception($"Variable not found: {variableExpr.Name}");
+                    throw new ParserExceptions($"Variable not found: {variableExpr.Name}");
                 }
                 return variable.Value;
             }
@@ -36,10 +38,10 @@ namespace calculator.ParserF
                     case "/":
                         return left / right;
                     default:
-                        throw new Exception("Unknown operator: " + binaryExpr.Operator);
+                        throw new ParserExceptions("Unknown operator: " + binaryExpr.Operator);
                 }
             }
-            throw new Exception("Unknown expression type");
+            throw new ParserExceptions("Unknown expression type");
         }
     }
 }
