@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -11,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using calculator.DataVault;
 
 namespace calculator.Views
 {
@@ -26,10 +28,21 @@ namespace calculator.Views
 
         private void createNewVariableClick(object sender, RoutedEventArgs e)
         {
-            DataVault.addVariable(variableName.Text, Convert.ToDouble(variableValue.Text));
+            var isValid = Regex.IsMatch(variableName.Text, @"^[a-zA-Z][a-zA-Z0-9]*$");
+            if (!isValid)
+            {
+                MessageBox.Show("Variable name can only start with english letter and contain letters or numbers in it.");
+                return;
+            }
+
+            isValid = Regex.IsMatch(variableValue.Text, @"^(\-)?\d+(\.\d+)?$");
+            if (!isValid)
+            {
+                MessageBox.Show("The variable must have an integer or decimal value (decimal separator: \".\")");
+                return;
+            }
             
-            MessageBox.Show($"{variableName.Text} + {variableValue.Text}");
-            
+            DataVault.DataVault.AddVariable(variableName.Text, Convert.ToDouble(variableValue.Text));
         }
     }
 }
