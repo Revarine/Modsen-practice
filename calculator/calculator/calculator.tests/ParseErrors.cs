@@ -80,10 +80,10 @@ namespace calculator.tests
         [Fact]
         public void ParseBrake_NoArguments()
         {
-            Assert.Throws<System.ArgumentOutOfRangeException>(() => 
+            Assert.Throws<ParserF.ParserExceptions>(() => 
             {
                 double realResult = computations.Calculate(
-                    parser.Parse("")
+                    parser.Parse("") // fix
                 );
             });
         }
@@ -95,6 +95,17 @@ namespace calculator.tests
             {
                 double realResult = computations.Calculate(
                     parser.Parse(" + ")
+                );
+            });
+        }
+        
+        [Fact]
+        public void ParseBrake_ManyOperators()
+        {
+            Assert.Throws<ParserF.ParserExceptions>(() => 
+            {
+                double realResult = computations.Calculate(
+                    parser.Parse("1 + 1 +") // fix
                 );
             });
         }
