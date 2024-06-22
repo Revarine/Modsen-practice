@@ -13,76 +13,19 @@ using System.Collections;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Data;
+using System.Globalization;
+using System.Text.RegularExpressions;
 using calculator.ParserF;
 using static MaterialDesignThemes.Wpf.Theme;
+using calculator.DataVault;
 
 namespace calculator
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-
-
-    public class Variable
-    {
-        public string Name { get; set; }
-        public double Value { get; set; }
-    }
-
-    public class Function
-    {
-        public string Name { get; set; }
-        public string Expression { get; set; }
-    }
-
-    public static class DataVault
-    {
-        private static ObservableCollection<Variable> variables;
-        private static ObservableCollection<Function> functions;
-
-        static DataVault()
-        {
-            variables = new ObservableCollection<Variable>();
-            functions = new ObservableCollection<Function>();
-        }
-
-        public static void addVariable(string variableName, double variableValue)
-        {
-            var existingVariable = variables.FirstOrDefault(v => v.Name == variableName);
-            if (existingVariable != null)
-            {
-                existingVariable.Value = variableValue;
-            }
-            else
-            {
-                variables.Add(new Variable { Name = variableName, Value = variableValue });
-            }
-        }
-
-        public static void AddFunction(string functionName, string functionExpression)
-        {
-            var existingFunction = functions.FirstOrDefault(f => f.Name == functionName);
-            if (existingFunction != null)
-            {
-                existingFunction.Expression = functionExpression;
-            }
-            else
-            {
-                functions.Add(new Function { Name = functionName, Expression = functionExpression });
-            }
-        }
-
-        public static ObservableCollection<Variable> getVariables()
-        {
-            return variables;
-        }
-
-        public static ObservableCollection<Function> GetFunctions()
-        {
-            return functions;
-        }
-    }
     
+
     public partial class MainWindow : Window
     {
         private readonly Parser parser = new Parser();
@@ -90,12 +33,15 @@ namespace calculator
 
         public MainWindow()
         {
+            Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
+            Thread.CurrentThread.CurrentUICulture = new CultureInfo("en-US");
             InitializeComponent();
-            DataVault.addVariable("xd", 1.23);
-            variablesView.ItemsSource = DataVault.getVariables();
+            variablesView.ItemsSource = DataVault.DataVault.GetVariables();
+            functionsView.ItemsSource = DataVault.DataVault.GetFunctions();
+
         }
 
-        private void Calculate_Click( object sender, RoutedEventArgs e )
+        private void Calculate_Click(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -105,11 +51,10 @@ namespace calculator
                 var result = computations.Calculate(expression);
 
                 inputField.Text = $"{result}";
-
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Ошибка: {ex.Message}");
+                MessageBox.Show($"Error: {ex.Message}");
             }
         }
 
@@ -117,6 +62,7 @@ namespace calculator
         {
             new AddFunction().ShowDialog();
         }
+
         private void showAddVariableMenu(object sender, RoutedEventArgs e)
         {
             new AddVariable().ShowDialog();
@@ -157,7 +103,7 @@ namespace calculator
                 }
                 else if (operation == "." && (inputText.Length == 0))
                 {
-                    inputField.Text = inputField.Text+ "0" + operation;
+                    inputField.Text = inputField.Text + "0" + operation;
                 }
                 else if (inputText.Length == 0 || inputText[inputText.Length - 1] == ' ')
                 {
@@ -173,10 +119,5 @@ namespace calculator
                 inputField.SelectionLength = 0;
             }
         }
-
-
-
-
-
     }
 }
