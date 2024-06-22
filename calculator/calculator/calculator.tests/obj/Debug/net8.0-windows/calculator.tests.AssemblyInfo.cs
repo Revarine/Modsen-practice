@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("calculator.tests")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+49237a261806a6b91e5ad1da4fe5e8016bd838a8")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6348769d9efe9efcb580bd351f86ece217ab59ad")]
 [assembly: System.Reflection.AssemblyProductAttribute("calculator.tests")]
 [assembly: System.Reflection.AssemblyTitleAttribute("calculator.tests")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

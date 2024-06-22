@@ -1,17 +1,15 @@
-using calculator.ParserF; 
+using calculator.ParserF;
 
 namespace calculator.tests
 {
     public class BasicOperations
     {
-        private readonly Parser parser = new Parser();
         private readonly Computations computations = new Computations();
 
-        public BasicOperations() {  }
 
         [Fact]
         public void AmountTest()
-        { 
+        {
             var expression = new BinaryExpression(
                 new NumberExpression(1.00),
                 new NumberExpression(3.00),
@@ -19,7 +17,7 @@ namespace calculator.tests
             );
 
             double expectedResult = 4.00;
-            double realResult = computations.Calculate( expression );
+            double realResult = computations.Calculate(expression);
 
             Assert.Equal(expectedResult, realResult);
         }
@@ -34,7 +32,7 @@ namespace calculator.tests
             );
 
             double expectedResult = 6.66;
-            double realResult = computations.Calculate( expression );
+            double realResult = computations.Calculate(expression);
 
             Assert.Equal(expectedResult, realResult);
         }
@@ -49,7 +47,7 @@ namespace calculator.tests
             );
 
             double expectedResult = 81.00720007;
-            double realResult = computations.Calculate( expression );
+            double realResult = computations.Calculate(expression);
 
             Assert.Equal(expectedResult, realResult);
         }
@@ -64,7 +62,7 @@ namespace calculator.tests
             );
 
             double expectedResult = 9.0001;
-            double realResult = computations.Calculate( expression );
+            double realResult = computations.Calculate(expression);
 
             Assert.Equal(expectedResult, realResult);
         }
