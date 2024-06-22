@@ -49,7 +49,7 @@
                 <Button Content="+/-" Margin="5"/>
                 <Button Content="0" Margin="5" Click="numberButton_Click" Cursor="Hand"/>
                 <Button Content="." Margin="5" Click="operationButton_Click"/>
-                <Button Content="=" Margin="5" Style="{StaticResource MaterialDesignFlatMidBgButton}" Width="55"/>
+                    <Button Content="=" Margin="5" Style="{StaticResource MaterialDesignFlatMidBgButton}" Width="55" Click="Calculate_Click" />
             </StackPanel>
         </StackPanel>
         </StackPanel>
