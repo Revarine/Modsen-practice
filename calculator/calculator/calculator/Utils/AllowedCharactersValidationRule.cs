@@ -14,7 +14,7 @@ namespace calculator.Utils
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
             string text = value as string;
-            if (Regex.IsMatch(text, @"^[a-zA-Z0-9\(\)\+\-\*\/\.\s]*$"))
+            if (Regex.IsMatch(text, @"^[a-zA-Z0-9\(\)\+\-\*\/\.\,\s]*$"))
                 return ValidationResult.ValidResult;
             else
                 return new ValidationResult(false, "Allowed english letters, numbers, (), operations: .+-/ *");
