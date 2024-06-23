@@ -7,3 +7,7 @@
 /.vs/Modsen-practice/FileContentIndex
 /.vs/Modsen-practice/v17
 /.vs
+
+[Bb]in/
+[Oo]bj/
+[Ll]og/
