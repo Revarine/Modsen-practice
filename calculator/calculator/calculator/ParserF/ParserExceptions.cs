@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace calculator.ParserF
 {
-    internal class ParserExceptions : Exception
+    public class ParserExceptions : Exception
     {
         public ParserExceptions( string message ) : base(message) { }
     }
