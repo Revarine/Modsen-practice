@@ -32,7 +32,8 @@ namespace calculator
         private readonly Parser parser = new Parser();
         private readonly Computations computations = new Computations();
         public ObservableCollection<string> historyCollection = new ObservableCollection<string>();
-        
+        private InputField inputFieldViewModel = new InputField();
+
         public MainWindow()
         {
             Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
@@ -41,6 +42,7 @@ namespace calculator
             variablesView.ItemsSource = DataVault.DataVault.GetVariables();
             functionsView.ItemsSource = DataVault.DataVault.GetFunctions();
             historyView.ItemsSource = historyCollection;
+            inputField.DataContext = inputFieldViewModel;
         }
 
         private void Calculate_Click(object sender, RoutedEventArgs e)
