@@ -23,6 +23,7 @@ namespace calculator.Views
                 parameters.Add(new Parameter { Name = ParameterTextBox.Text });
                 ParameterTextBox.Clear();
             }
+
             else
             {
                 MessageBox.Show("Function parameter can't be empty.");
@@ -34,11 +35,13 @@ namespace calculator.Views
             var functionName = FunctionNameTextBox.Text;
             var functionExpression = FunctionExpressionTextBox.Text;
             var isValid = Regex.IsMatch(functionName, @"^[a-zA-Z][a-zA-Z0-9]*$");
+
             if (!isValid)
             {
                 MessageBox.Show("Function name can only start with english letter and contain letters or numbers in it.");
                 return;
             }
+
             if (string.IsNullOrWhiteSpace(functionName) || string.IsNullOrWhiteSpace(functionExpression))
             {
                 MessageBox.Show("Function name or function expression can't be empty.");

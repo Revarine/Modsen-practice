@@ -47,16 +47,38 @@ namespace calculator.ParserF
 
         private Expression ParseOperand()
         {
+            if (tokens[position].Type == TokenTypesEnum.TokenType.Operator && tokens[position].Value == "-")
+            {
+                position++;
+                var factor = ParseOperand();
+                return new BinaryExpression(new NumberExpression(0), factor, "-");
+            }
+
             if (tokens[position].Type == TokenTypesEnum.TokenType.Number)
             {
-                var numberExpr = new NumberExpression(double.Parse(tokens[position++].Value));
-                return numberExpr;
+                return new NumberExpression(double.Parse(tokens[position++].Value));
             }
 
             if (tokens[position].Type == TokenTypesEnum.TokenType.Identifier)
             {
-                var identifierExpr = new VariableExpression(tokens[position++].Value);
-                return identifierExpr;
+                var identifier = tokens[position++].Value;
+
+                if (position < tokens.Count && tokens[position].Value == "(")
+                {
+                    position++; // scip (
+                    var args = new List<Expression>();
+                    while (tokens[position].Value != ")")
+                    {
+                        args.Add(ParseExpression());
+                        if (tokens[position].Value == ",")
+                        {
+                            position++;
+                        }
+                    }
+                    position++; // skip )
+                    return new FunctionCallExpression(identifier, args);
+                }
+                return new VariableExpression(identifier);
             }
 
             if (tokens[position].Type == TokenTypesEnum.TokenType.LeftParen)
@@ -66,14 +88,14 @@ namespace calculator.ParserF
 
                 if (tokens[position].Type != TokenTypesEnum.TokenType.RightParen)
                 {
-                    throw new ParserExceptions("Missing closing parenthesis");
+                    throw new Exception("Missing closing parenthesis");
                 }
 
                 position++;
                 return expr;
             }
 
-            throw new ParserExceptions("Unexpected token: " + tokens[position].Value);
+            throw new Exception("Unexpected token: " + tokens[position].Value);
         }
     }
 }
