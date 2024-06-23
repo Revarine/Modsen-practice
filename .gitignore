@@ -1,7 +1,7 @@
 /calculator/calculator/.vs
 /calculator/calculator/.idea
-/calculator/calculator/calculator/bin
-/calculator/calculator/calculator/obj
+/calculator/calculator/*/bin
+/calculator/calculator/*/obj
 
 /.vs/slnx.sqlite
 /.vs/Modsen-practice/FileContentIndex
