@@ -58,7 +58,7 @@ namespace calculator
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error: {ex.Message}");
+                new ResultWindow($"Error: {ex.Message}").ShowDialog();
             }
         }
 

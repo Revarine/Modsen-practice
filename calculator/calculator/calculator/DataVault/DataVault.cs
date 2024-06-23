@@ -2,6 +2,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
+using calculator.Views;
 
 namespace calculator.DataVault
 {
@@ -21,7 +22,7 @@ namespace calculator.DataVault
             var existingVariable = variables.FirstOrDefault(v => v.Name == variableName);
             if (existingVariable != null)
             {
-                MessageBox.Show("Variable value is changed successfully!");
+                new ResultWindow("Variable value is changed successfully!").ShowDialog();
                 existingVariable.Value = variableValue;
             }
             else
@@ -35,7 +36,7 @@ namespace calculator.DataVault
             var existingFunction = functions.FirstOrDefault(f => f.Name == functionName);
             if (existingFunction != null)
             {
-                MessageBox.Show("Function values is changed successfully!");
+                new ResultWindow("Function values is changed successfully!").ShowDialog();
                 existingFunction.Expression = functionExpression;
                 existingFunction.Parameters = parameters;
             }

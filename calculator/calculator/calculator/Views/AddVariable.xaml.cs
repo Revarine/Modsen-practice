@@ -28,14 +28,14 @@ namespace calculator.Views
             var isValid = Regex.IsMatch(variableName.Text, @"^[a-zA-Z][a-zA-Z0-9]*$");
             if (!isValid)
             {
-                MessageBox.Show("Variable name can only start with english letter and contain letters or numbers in it.");
+                new ResultWindow("Variable name can only start with english letter and contain letters or numbers in it.").ShowDialog();
                 return;
             }
 
             isValid = Regex.IsMatch(variableValue.Text, @"^(\-)?\d+(\.\d+)?$");
             if (!isValid)
             {
-                MessageBox.Show("The variable must have an integer or decimal value (decimal separator: \".\")");
+                new ResultWindow("The variable must have an integer or decimal value (decimal separator: \".\")").ShowDialog();
                 return;
             }
             

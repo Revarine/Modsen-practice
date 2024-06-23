@@ -2,6 +2,7 @@
 using System.Text.RegularExpressions;
 using System.Windows;
 using calculator.DataVault;
+using calculator.ParserF;
 
 namespace calculator.Views
 {
@@ -22,13 +23,13 @@ namespace calculator.Views
 
             if (string.IsNullOrWhiteSpace(parameterName))
             {
-                MessageBox.Show("Function parameter can't be empty.");
+                new ResultWindow("Function parameter can't be empty.").ShowDialog();
                 return;
             }
 
             if (!Regex.IsMatch(parameterName, @"^[a-zA-Z]+$"))
             {
-                MessageBox.Show("Parameter name can only contain english letters.");
+                new ResultWindow("Parameter name can only contain english letters.").ShowDialog();
                 return;
             }
 
@@ -44,16 +45,25 @@ namespace calculator.Views
 
             if (!isValid)
             {
-                MessageBox.Show("Function name can only start with english letter and contain letters or numbers in it.");
+                new ResultWindow("Function name can only start with english letter and contain letters or numbers in it.").ShowDialog();
                 return;
             }
 
             if (string.IsNullOrWhiteSpace(functionName) || string.IsNullOrWhiteSpace(functionExpression))
             {
-                MessageBox.Show("Function name or function expression can't be empty.");
+                new ResultWindow("Function name or function expression can't be empty.").ShowDialog();
                 return;
             }
 
+            try
+            {
+                var expression = new Parser().Parse(functionExpression);
+            }
+            catch (Exception exception)
+            {
+                new ResultWindow("Bad expression").ShowDialog();
+            }
+            
             DataVault.DataVault.AddFunction(functionName, functionExpression, parameters);
             this.Close();
         }
