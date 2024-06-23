@@ -4,6 +4,7 @@ namespace calculator.tests
 {
     public class BasicOperations
     {
+        private readonly Parser parser = new Parser();
         private readonly Computations computations = new Computations();
 
 
@@ -63,6 +64,30 @@ namespace calculator.tests
 
             double expectedResult = 9.0001;
             double realResult = computations.Calculate(expression);
+
+            Assert.Equal(expectedResult, realResult);
+        }
+
+        [Fact]
+        public void PriorityTest()
+        {
+            double expectedResult = 6;
+
+            double realResult = computations.Calculate(
+                parser.Parse("2 + 2 * 2")
+            );
+
+            Assert.Equal(expectedResult, realResult);
+        }
+
+        [Fact]
+        public void ManyOperatorsTests()
+        {
+            double expectedResult = 8;
+
+            double realResult = computations.Calculate(
+                parser.Parse("2 + 4 / 2 + 2 * 2")
+            );
 
             Assert.Equal(expectedResult, realResult);
         }
