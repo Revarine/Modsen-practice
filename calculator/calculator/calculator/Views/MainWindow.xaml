@@ -63,10 +63,13 @@
                     </TabItem.Header>
                     <TabItem.Content>
                         <StackPanel>
-                            <TextBlock
-                                Text="It's still empty here ☹️"
-                                TextAlignment="Center"
-                                Style="{StaticResource MaterialDesignBody1TextBlock}" />
+                            <ListView x:Name="historyView" ScrollViewer.VerticalScrollBarVisibility="Hidden" Height="260">
+                                <ListView.View>
+                                    <GridView>
+                                        <GridViewColumn Header="Expressions"/>
+                                    </GridView>
+                                </ListView.View>
+                            </ListView>
                         </StackPanel>
                     </TabItem.Content>
                 </TabItem>
@@ -78,7 +81,7 @@
                     </TabItem.Header>
                     <TabItem.Content>
                         <StackPanel>
-                            <ListView x:Name="functionsView">
+                            <ListView x:Name="functionsView" ScrollViewer.VerticalScrollBarVisibility="Hidden" Height="260">
                                 <ListView.View>
                                     <GridView>
                                         <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}" />
@@ -97,7 +100,7 @@
                     </TabItem.Header>
                     <TabItem.Content>
                         <StackPanel>
-                            <ListView x:Name="variablesView">
+                            <ListView x:Name="variablesView" ScrollViewer.VerticalScrollBarVisibility="Hidden" Height="260">
                                 <ListView.View>
                                     <GridView>
                                         <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}" />

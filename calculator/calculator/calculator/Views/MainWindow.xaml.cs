@@ -31,7 +31,8 @@ namespace calculator
     {
         private readonly Parser parser = new Parser();
         private readonly Computations computations = new Computations();
-
+        public ObservableCollection<string> historyCollection = new ObservableCollection<string>();
+        
         public MainWindow()
         {
             Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
@@ -39,7 +40,7 @@ namespace calculator
             InitializeComponent();
             variablesView.ItemsSource = DataVault.DataVault.GetVariables();
             functionsView.ItemsSource = DataVault.DataVault.GetFunctions();
-
+            historyView.ItemsSource = historyCollection;
         }
 
         private void Calculate_Click(object sender, RoutedEventArgs e)
@@ -47,6 +48,7 @@ namespace calculator
             try
             {
                 var input = inputField.Text;
+                if (!historyCollection.Contains(input)) historyCollection.Add(input);
                 var expression = parser.Parse(input);
                 //Console.WriteLine($"Parsed Expression Tree: {expression}");
                 var result = computations.Calculate(expression);
