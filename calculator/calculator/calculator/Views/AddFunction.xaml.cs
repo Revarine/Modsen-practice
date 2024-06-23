@@ -18,16 +18,22 @@ namespace calculator.Views
 
         private void AddParameterClick(object sender, RoutedEventArgs e)
         {
-            if (!string.IsNullOrWhiteSpace(ParameterTextBox.Text))
-            {
-                parameters.Add(new Parameter { Name = ParameterTextBox.Text });
-                ParameterTextBox.Clear();
-            }
+            string parameterName = ParameterTextBox.Text.Trim();
 
-            else
+            if (string.IsNullOrWhiteSpace(parameterName))
             {
                 MessageBox.Show("Function parameter can't be empty.");
+                return;
             }
+
+            if (!Regex.IsMatch(parameterName, @"^[a-zA-Z]+$"))
+            {
+                MessageBox.Show("Parameter name can only contain english letters.");
+                return;
+            }
+
+            parameters.Add(new Parameter { Name = parameterName });
+            ParameterTextBox.Clear();
         }
 
         private void CreateNewFunctionClick(object sender, RoutedEventArgs e)
