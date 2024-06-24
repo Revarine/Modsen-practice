@@ -4,28 +4,27 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace calculator.Utils
+namespace calculator.Utils;
+
+internal class Result<T>
 {
-    internal class Result<T>
+    public T Value { get; set; }
+    public string? Error { get; set; }
+
+    public Result(T Value) 
     {
-        public T Value { get; set; }
-        public string? Error { get; set; }
+        this.Value = Value;
+    }
 
-        public Result(T Value) 
-        {
-            this.Value = Value;
-        }
+    public Result(string Error)
+    {
+        this.Error = Error;
+    }
 
-        public Result(string Error)
-        {
-            this.Error = Error;
-        }
+    public bool HasValue => Error == null;
 
-        public bool HasValue => Error == null;
-
-        public static implicit operator bool(Result<T> result)
-        {
-            return result.HasValue;
-        }
+    public static implicit operator bool(Result<T> result)
+    {
+        return result.HasValue;
     }
 }

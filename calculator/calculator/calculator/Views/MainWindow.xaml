@@ -52,7 +52,7 @@
                     <Button Content="+" Margin="5" Click="operationButton_Click" />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
-                    <Button Content="+/-" Margin="5" />
+                    <Button Margin="5" Visibility="Hidden"/>
                     <Button Content="0" Margin="5" Click="numberButton_Click" Cursor="Hand" />
                     <Button Content="." Margin="5" Click="operationButton_Click" />
                     <Button Content="=" Margin="5" Style="{StaticResource MaterialDesignFlatMidBgButton}" Width="55"
