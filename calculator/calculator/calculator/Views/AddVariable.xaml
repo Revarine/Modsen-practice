@@ -1,0 +1,23 @@
+﻿<Window x:Class="calculator.Views.AddVariable"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:calculator.Views"
+        mc:Ignorable="d"  WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        Title="Add variable" Height="190" Width="300">
+    <StackPanel>
+        <Border Padding="10">
+            <StackPanel>
+                <TextBlock Text="Variable name:" />
+                <TextBox Margin="0 5" Text="" x:Name="variableName" />
+             
+                <TextBlock Text="Variable value:"/>
+                <TextBox Margin="0 5" Text="" x:Name="variableValue"/>
+                
+                <Button Content="Add variable" Click="createNewVariableClick" />
+            </StackPanel>
+        </Border>
+    </StackPanel>
+</Window>

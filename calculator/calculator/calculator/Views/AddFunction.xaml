@@ -1,0 +1,33 @@
+﻿<Window x:Class="calculator.Views.AddFunction"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:calculator.Views"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        Title="Add Function" Height="250" Width="300"
+        SizeToContent="Height">
+    <StackPanel>
+        <Border Padding="10">
+            <StackPanel>
+                <TextBlock Text="Function Name:"/>
+                <TextBox x:Name="FunctionNameTextBox" Margin="0 5" Style="{StaticResource MaterialDesignTextBox}"/>
+                
+                <TextBlock Text="Add a Parameter:"/>
+                <StackPanel Orientation="Horizontal">
+                    <TextBox x:Name="ParameterTextBox" Margin="10 0" Width="50" Style="{StaticResource MaterialDesignTextBoxBase}"/>
+                    <Button Content="Add" Click="AddParameterClick" Style="{StaticResource MaterialDesignFlatButton}"/>
+                </StackPanel>
+
+                <TextBlock Text="Parameters:"/>
+                <ListBox x:Name="ParametersListBox" Margin="0 5" Style="{StaticResource MaterialDesignListBox}" DisplayMemberPath="Name"/>
+
+                <TextBlock Text="Function Expression:"/>
+                <TextBox x:Name="FunctionExpressionTextBox" Margin="0 5" Style="{StaticResource MaterialDesignTextBox}"/>
+
+                <Button Content="Add Function" Click="CreateNewFunctionClick"/>
+            </StackPanel>
+        </Border>
+    </StackPanel>
+</Window>
