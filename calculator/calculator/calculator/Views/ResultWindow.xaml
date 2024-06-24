@@ -11,7 +11,10 @@
             <TextBlock 
                 x:Name="content"
                 Height="80"
+                Width="290"
                 Style="{StaticResource MaterialDesignBody1TextBlock}"
+                TextWrapping="Wrap"
+                ScrollViewer.VerticalScrollBarVisibility="Hidden"
             />
             <StackPanel Orientation="Horizontal" FlowDirection="RightToLeft">
                 <Button 

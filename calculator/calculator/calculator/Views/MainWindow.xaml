@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:calculator"
+        xmlns:local="clr-namespace:calculator" xmlns:local1="clr-namespace:calculator.Utils"
         mc:Ignorable="d" WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
         Title="Calculator" Height="310" Width="570">
@@ -14,12 +14,19 @@
     </Window.Resources>
     <StackPanel Orientation="Horizontal" Cursor="">
         <StackPanel>
-            <TextBox
-                x:Name="inputField"
-                MaxWidth="260"
-                FontSize="20"
-                Style="{StaticResource MaterialDesignTextBox}" />
-            <StackPanel>
+            <TextBox x:Name="inputField" 
+         MaxWidth="260"
+         FontSize="20"
+         Style="{StaticResource MaterialDesignTextBox}">
+                <TextBox.Text>
+                    <Binding Path="MyText" UpdateSourceTrigger="PropertyChanged">
+                        <Binding.ValidationRules>
+                            <local1:AllowedCharactersValidationRule />
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+            <StackPanel Margin="0,15,0,0">
                 <StackPanel Orientation="Horizontal">
                     <Button Content="f( )" Margin="5" Click="showAddFunctionMenu" />
                     <Button Content="var" Margin="5" Click="showAddVariableMenu" />
@@ -45,7 +52,7 @@
                     <Button Content="+" Margin="5" Click="operationButton_Click" />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
-                    <Button Content="+/-" Margin="5" />
+                    <Button Margin="5" Visibility="Hidden"/>
                     <Button Content="0" Margin="5" Click="numberButton_Click" Cursor="Hand" />
                     <Button Content="." Margin="5" Click="operationButton_Click" />
                     <Button Content="=" Margin="5" Style="{StaticResource MaterialDesignFlatMidBgButton}" Width="55"

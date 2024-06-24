@@ -12,19 +12,18 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace calculator.Views
+namespace calculator.Views;
+
+/// <summary>
+/// Логика взаимодействия для ResultWindow.xaml
+/// </summary>
+public partial class ResultWindow : Window
 {
-    /// <summary>
-    /// Логика взаимодействия для ResultWindow.xaml
-    /// </summary>
-    public partial class ResultWindow : Window
+    public ResultWindow(string content)
     {
-        public ResultWindow(string content)
-        {
             InitializeComponent();
             this.content.Text = content;
         }
 
-        private void OkButtonClick(object sender, RoutedEventArgs e) => this.Close();
-    }
+    private void OkButtonClick(object sender, RoutedEventArgs e) => this.Close();
 }
