@@ -13,7 +13,7 @@ public class UsersRepository : IRepository<User>
         _dbContext = dbContext;
     }
 
-    public async Task<IEnumerable<User>> GetIEnumerableAsync(CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<User>> GetElementsAsync(CancellationToken cancellationToken = default)
     {
         var users = await _dbContext.Users.AsNoTracking().ToListAsync(cancellationToken);
         return users;
