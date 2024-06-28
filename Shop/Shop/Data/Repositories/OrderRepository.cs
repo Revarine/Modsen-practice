@@ -65,15 +65,5 @@ namespace Shop.Data.Repositories
                 await _dbContext.SaveChangesAsync(cancellationToken);
             }
         }
-
-        public Task UpdateAsync(Order item, CancellationToken cancellationToken = default)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task SaveAsync(CancellationToken cancellationToken = default)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
