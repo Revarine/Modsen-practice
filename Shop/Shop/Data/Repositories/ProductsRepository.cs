@@ -7,7 +7,7 @@ namespace Shop.Data.Repositories;
 public class ProductsRepository : IRepository<Product>
 {
     private ShopDbContext _dbContext { get; set; }
-    
+
     public ProductsRepository(ShopDbContext dbContext)
     {
         _dbContext = dbContext;
@@ -31,23 +31,22 @@ public class ProductsRepository : IRepository<Product>
         await _dbContext.SaveChangesAsync(cancellationToken);
     }
 
-    public async Task UpdateAsync(Product item, CancellationToken cancellationToken = default)
+    public async Task UpdateAsync(int id, Product item, CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        await _dbContext.Products.Where(e => e.Id == id).ExecuteUpdateAsync
+        (s =>
+                s
+                    .SetProperty(e => e.Name, item.Name)
+                    .SetProperty(e => e.Price, item.Price)
+                    .SetProperty(e => e.CategoryId, item.CategoryId),
+            cancellationToken
+        );
+        await _dbContext.SaveChangesAsync(cancellationToken);
     }
 
     public async Task DeleteAsync(int id, CancellationToken cancellationToken = default)
     {
-        var product = await _dbContext.Products.FindAsync(id, cancellationToken);
-        if (product != null)
-        {
-            _dbContext.Remove(product);
-            await _dbContext.SaveChangesAsync(cancellationToken);
-        }
-    }
-
-    public async Task SaveAsync(CancellationToken cancellationToken = default)
-    {
-        throw new NotImplementedException();
+        await _dbContext.Products.Where(e => e.Id == id).ExecuteDeleteAsync(cancellationToken);
+        await _dbContext.SaveChangesAsync(cancellationToken);
     }
 }
