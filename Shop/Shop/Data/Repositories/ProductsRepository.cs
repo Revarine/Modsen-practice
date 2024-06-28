@@ -14,32 +14,39 @@ public class ProductsRepository : IRepository<Product>
     }
 
 
-    public Task<IEnumerable<Product>> GetIEnumerableAsync(CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<Product>> GetIEnumerableAsync(CancellationToken cancellationToken = default)
+    {
+        var products = await _dbContext.Products.AsNoTracking().ToListAsync(cancellationToken);
+        return products.AsEnumerable();
+    }
+
+    public async Task<Product> GetItemAsync(int id, CancellationToken cancellationToken = default)
+    {
+        return await _dbContext.Products.FindAsync(id, cancellationToken);
+    }
+
+    public async Task CreateAsync(Product item, CancellationToken cancellationToken = default)
+    {
+        await _dbContext.Products.AddAsync(item, cancellationToken);
+        await _dbContext.SaveChangesAsync(cancellationToken);
+    }
+
+    public async Task UpdateAsync(Product item, CancellationToken cancellationToken = default)
     {
         throw new NotImplementedException();
     }
 
-    public Task<Product> GetItemAsync(int id, CancellationToken cancellationToken = default)
+    public async Task DeleteAsync(int id, CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        var product = await _dbContext.Products.FindAsync(id, cancellationToken);
+        if (product != null)
+        {
+            _dbContext.Remove(product);
+            await _dbContext.SaveChangesAsync(cancellationToken);
+        }
     }
 
-    public Task CreateAsync(Product item, CancellationToken cancellationToken = default)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task UpdateAsync(Product item, CancellationToken cancellationToken = default)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task DeleteAsync(int id, CancellationToken cancellationToken = default)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task SaveAsync(CancellationToken cancellationToken = default)
+    public async Task SaveAsync(CancellationToken cancellationToken = default)
     {
         throw new NotImplementedException();
     }
