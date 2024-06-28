@@ -4,17 +4,17 @@ using Shop.Models;
 
 namespace Shop.Data.Repositories;
 
-public class ProductsRepository : IRepository<Product>
+public class ProductRepository : IRepository<Product>
 {
     private ShopDbContext _dbContext { get; set; }
 
-    public ProductsRepository(ShopDbContext dbContext)
+    public ProductRepository(ShopDbContext dbContext)
     {
         _dbContext = dbContext;
     }
 
 
-    public async Task<IEnumerable<Product>> GetIEnumerableAsync(CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<Product>> GetElementsAsync(CancellationToken cancellationToken = default)
     {
         var products = await _dbContext.Products.AsNoTracking().Include(x => x.Category).ToListAsync(cancellationToken);
         return products.AsEnumerable();
