@@ -4,11 +4,11 @@ using Shop.Models;
 
 namespace Shop.Data.Repositories;
 
-public class UserRepository : IRepository<User>
+public class UsersRepository : IRepository<User>
 {
     private ShopDbContext _dbContext { get; set; }
 
-    public UserRepository(ShopDbContext dbContext)
+    public UsersRepository(ShopDbContext dbContext)
     {
         _dbContext = dbContext;
     }
@@ -38,8 +38,10 @@ public class UserRepository : IRepository<User>
                 s
                     .SetProperty(e => e.Email, item.Email)
                     .SetProperty(e => e.Password, item.Password)
-                    .SetProperty(e => e.Username, item.Username)
+                    .SetProperty(e => e.Username, item.Username),
+                cancellationToken
             );
+        await _dbContext.SaveChangesAsync(cancellationToken);
     }
 
     public async Task DeleteAsync(int id, CancellationToken cancellationToken = default)
