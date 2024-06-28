@@ -4,11 +4,11 @@ using Shop.Models;
 
 namespace Shop.Data.Repositories;
 
-public class UsersRepository : IRepository<User>
+public class UserRepository : IRepository<User>
 {
     private ShopDbContext _dbContext { get; set; }
 
-    public UsersRepository(ShopDbContext dbContext)
+    public UserRepository(ShopDbContext dbContext)
     {
         _dbContext = dbContext;
     }
