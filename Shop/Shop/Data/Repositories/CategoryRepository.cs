@@ -4,16 +4,16 @@ using Shop.Models;
 
 namespace Shop.Data.Repositories;
 
-public class CategoriesRepository : IRepository<Category>
+public class CategoryRepository : IRepository<Category>
 {
     private ShopDbContext _dbContext { get; set; }
 
-    public CategoriesRepository(ShopDbContext dbContext)
+    public CategoryRepository(ShopDbContext dbContext)
     {
         _dbContext = dbContext;
     }
 
-    public async Task<IEnumerable<Category>> GetIEnumerableAsync(CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<Category>> GetElementsAsync(CancellationToken cancellationToken = default)
     {
         var categories = await _dbContext.Categories.AsNoTracking().ToListAsync(cancellationToken);
         return categories;
