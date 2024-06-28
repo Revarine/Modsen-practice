@@ -30,24 +30,21 @@ public class UserRepository : IRepository<User>
         await _dbContext.SaveChangesAsync(cancellationToken);
     }
 
-    public async Task UpdateAsync(User item, CancellationToken cancellationToken = default)
+    public async Task UpdateAsync(int id, User item, CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        await _dbContext.Users.Where(e => e.Id == id)
+            .ExecuteUpdateAsync
+            (s =>
+                s
+                    .SetProperty(e => e.Email, item.Email)
+                    .SetProperty(e => e.Password, item.Password)
+                    .SetProperty(e => e.Username, item.Username)
+            );
     }
 
     public async Task DeleteAsync(int id, CancellationToken cancellationToken = default)
     {
-        var user = await _dbContext.Users.FindAsync(id, cancellationToken);
-        if (user != null)
-        {
-            _dbContext.Remove(user);
-            await _dbContext.SaveChangesAsync(cancellationToken);
-        }
+        await _dbContext.Users.Where(e => e.Id == id).ExecuteDeleteAsync(cancellationToken);
+        await _dbContext.SaveChangesAsync(cancellationToken);
     }
-
-    public async Task SaveAsync(CancellationToken cancellationToken = default)
-    {
-        throw new NotImplementedException();
-    }
-
 }
