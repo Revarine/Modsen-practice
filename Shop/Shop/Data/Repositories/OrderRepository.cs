@@ -13,7 +13,7 @@ namespace Shop.Data.Repositories
                 _dbContext = dbContext;
             }
 
-            public async Task<IEnumerable<Order>> GetIEnumerableAsync(CancellationToken cancellationToken = default)
+            public async Task<IEnumerable<Order>> GetElementsAsync(CancellationToken cancellationToken = default)
             {
                 var orders = await _dbContext.Orders
                     .AsNoTracking()
