@@ -16,13 +16,13 @@ public class ProductsRepository : IRepository<Product>
 
     public async Task<IEnumerable<Product>> GetIEnumerableAsync(CancellationToken cancellationToken = default)
     {
-        var products = await _dbContext.Products.AsNoTracking().ToListAsync(cancellationToken);
+        var products = await _dbContext.Products.AsNoTracking().Include(x => x.Category).ToListAsync(cancellationToken);
         return products.AsEnumerable();
     }
 
     public async Task<Product> GetItemAsync(int id, CancellationToken cancellationToken = default)
     {
-        return await _dbContext.Products.FindAsync(id, cancellationToken);
+        return await _dbContext.Products.Where(x => x.Id == id).Include(x => x.Category).FirstAsync(cancellationToken);
     }
 
     public async Task CreateAsync(Product item, CancellationToken cancellationToken = default)
