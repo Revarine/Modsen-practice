@@ -30,24 +30,22 @@ public class OrderItemsRepository : IRepository<OrderItem>
         await _dbContext.SaveChangesAsync(cancellationToken);
     }
 
-    public async Task UpdateAsync(OrderItem item, CancellationToken cancellationToken = default)
+    public async Task UpdateAsync(int id, OrderItem item, CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        await _dbContext.OrderItems.Where(e => e.Id == id).ExecuteUpdateAsync
+            ( s =>
+                s
+                    .SetProperty(e => e.OrderId, item.OrderId)
+                    .SetProperty(e => e.ProductId, item.ProductId)
+                    .SetProperty(e => e.Quantity, item.Quantity),
+                cancellationToken
+                );
+        await _dbContext.SaveChangesAsync(cancellationToken);
     }
 
     public async Task DeleteAsync(int id, CancellationToken cancellationToken = default)
     {
-        var orderItem = await _dbContext.OrderItems.FindAsync(id, cancellationToken);
-        if (orderItem != null)
-        {
-            _dbContext.Remove(orderItem);
-            await _dbContext.SaveChangesAsync(cancellationToken);
-        }
+        await _dbContext.OrderItems.Where(e => e.Id == id).ExecuteDeleteAsync(cancellationToken);
+        await _dbContext.SaveChangesAsync(cancellationToken);
     }
-
-    public async Task SaveAsync(CancellationToken cancellationToken = default)
-    {
-        throw new NotImplementedException();
-    }
-
 }
