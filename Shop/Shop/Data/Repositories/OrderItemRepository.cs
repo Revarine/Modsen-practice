@@ -4,16 +4,16 @@ using Shop.Models;
 
 namespace Shop.Data.Repositories;
 
-public class OrderItemsRepository : IRepository<OrderItem>
+public class OrderItemRepository : IRepository<OrderItem>
 {
     private ShopDbContext _dbContext { get; set; }
 
-    public OrderItemsRepository(ShopDbContext dbContext)
+    public OrderItemRepository(ShopDbContext dbContext)
     {
         _dbContext = dbContext;
     }
 
-    public async Task<IEnumerable<OrderItem>> GetIEnumerableAsync(CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<OrderItem>> GetElementsAsync(CancellationToken cancellationToken = default)
     {
         var orderItems = await _dbContext.OrderItems.AsNoTracking().ToListAsync(cancellationToken);
         return orderItems;
