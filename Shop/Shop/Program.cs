@@ -1,5 +1,10 @@
 using Microsoft.EntityFrameworkCore;
 using Shop.Data;
+using Shop.Data.Interfaces;
+using Shop.Data.Repositories;
+using Shop.Models;
+using Shop.Services;
+using Shop.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,33 +14,20 @@ builder.Services.AddDbContext<ShopDbContext>(
     {
         options.UseSqlServer(builder.Configuration.GetConnectionString(nameof(ShopDbContext)));
     });
+
+builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<IRepository<Product>, ProductRepository>();
+builder.Services.AddScoped<IRepository<Category>, CategoryRepository>();
+
+// Configure AutoMapper
+builder.Services.AddAutoMapper(typeof(Program));
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 
 app.UseHttpsRedirection();
 
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
-
-app.MapGet("/weatherforecast", () =>
-{
-    var forecast = Enumerable.Range(1, 5).Select(index =>
-            new WeatherForecast
-            (
-                DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-                Random.Shared.Next(-20, 55),
-                summaries[Random.Shared.Next(summaries.Length)]
-            ))
-        .ToArray();
-    return forecast;
-});
+app.MapGet("/", () => "Hello world!");
 
 app.Run();
-
-internal record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}
