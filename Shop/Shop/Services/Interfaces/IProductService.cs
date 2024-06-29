@@ -4,11 +4,11 @@ namespace Shop.Services.Interfaces
 {
     public interface IProductService
     {
-        Task<ProductDto> GetProductByIdAsync(int productId);
-        Task<IEnumerable<ProductDto>> GetAllProductsAsync();
-        Task<IEnumerable<ProductDto>> GetProductsByCategoryAsync(int categoryId);
-        Task<ProductDto> CreateProductAsync(ProductDto newProduct);
-        Task UpdateProductAsync(int productId, ProductDto updatedProduct);
-        Task DeleteProductAsync(int productId);
+        Task<ProductDto> GetProductByIdAsync(int productId, CancellationToken cancellationToken = default);
+        Task<IEnumerable<ProductDto>> GetAllProductsAsync(CancellationToken cancellationToken = default);
+        Task<IEnumerable<ProductDto>> GetProductsByCategoryAsync(int categoryId, CancellationToken cancellationToken = default);
+        Task<ProductDto> CreateProductAsync(ProductDto newProduct, CancellationToken cancellationToken = default);
+        Task UpdateProductAsync(int productId, ProductDto updatedProduct, CancellationToken cancellationToken = default);
+        Task DeleteProductAsync(int productId, CancellationToken cancellationToken = default);
     }
 }

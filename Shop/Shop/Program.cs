@@ -17,6 +17,7 @@ builder.Services.AddDbContext<ShopDbContext>(
 
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IRepository<Product>, ProductRepository>();
+builder.Services.AddScoped<IRepository<Category>, CategoryRepository>();
 
 // Configure AutoMapper
 builder.Services.AddAutoMapper(typeof(Program));
