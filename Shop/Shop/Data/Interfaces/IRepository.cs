@@ -7,6 +7,5 @@
         Task CreateAsync(T item, CancellationToken cancellationToken = default);
         Task UpdateAsync(int id, T item, CancellationToken cancellationToken = default);
         Task DeleteAsync(int id, CancellationToken cancellationToken = default);
-       
     }
 }
