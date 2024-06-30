@@ -45,12 +45,26 @@ public class UserService : IUserService
 
     public async Task UpdateUserAsync(int userId, UserDto updatedUser, CancellationToken cancellationToken = default)
     {
+        var existingUser = await _userRepository.GetItemAsync(userId, cancellationToken);
+        
+        if (existingUser == null)
+        {
+            throw new NotFoundException("Cannot update non-existent user");
+        }
+        
         var user = _mapper.Map<User>(updatedUser);
         await _userRepository.UpdateAsync(userId, user, cancellationToken);
     }
 
     public async Task DeleteUserAsync(int userId, CancellationToken cancellationToken = default)
     {
+        var existingUser = await _userRepository.GetItemAsync(userId, cancellationToken);
+        
+        if (existingUser == null)
+        {
+            throw new NotFoundException("Cannot delete non-existent user");
+        }
+        
         await _userRepository.DeleteAsync(userId, cancellationToken);
     }
 }
