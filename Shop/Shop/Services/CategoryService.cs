@@ -45,12 +45,26 @@ public class CategoryService : ICategoryService
 
     public async Task UpdateCategoryAsync(int categoryId, CategoryDto updatedCategory, CancellationToken cancellationToken = default)
     {
+        var existingCategory = await _categoryRepository.GetItemAsync(categoryId, cancellationToken);
+        
+        if (existingCategory == null)
+        {
+            throw new NotFoundException("Cannot update non-existent category");
+        }
+        
         var category = _mapper.Map<Category>(updatedCategory);
         await _categoryRepository.UpdateAsync(categoryId, category, cancellationToken);
     }
 
     public async Task DeleteCategoryAsync(int categoryId, CancellationToken cancellationToken = default)
     {
+        var existingCategory = await _categoryRepository.GetItemAsync(categoryId, cancellationToken);
+        
+        if (existingCategory == null)
+        {
+            throw new NotFoundException("Cannot delete non-existent category");
+        }
+        
         await _categoryRepository.DeleteAsync(categoryId, cancellationToken);
     }
 }
