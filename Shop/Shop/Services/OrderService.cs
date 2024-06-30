@@ -33,6 +33,11 @@ public class OrderService : IOrderService
     public async Task<IEnumerable<OrderDto>> GetAllOrdersAsync(CancellationToken cancellationToken = default)
     {
         var orders = await _orderRepository.GetElementsAsync(cancellationToken);
+
+        if (orders == null || !orders.Any())
+        {
+            throw new NotFoundException("No orders found.");
+        }
         return _mapper.Map<IEnumerable<OrderDto>>(orders);
     }
 
@@ -40,6 +45,11 @@ public class OrderService : IOrderService
     {
         var orders = (await _orderRepository.GetElementsAsync(cancellationToken))
             .Where(o => o.UserId == userId);
+
+        if (!orders.Any())
+        {
+            throw new NotFoundException($"No orders found for user with ID {userId}.");
+        }
 
         return _mapper.Map<IEnumerable<OrderDto>>(orders);
     }
@@ -53,12 +63,26 @@ public class OrderService : IOrderService
 
     public async Task UpdateOrderAsync(int orderId, OrderDto updatedOrder, CancellationToken cancellationToken = default)
     {
+        var existingOrder = await _orderRepository.GetItemAsync(orderId, cancellationToken);
+
+        if (existingOrder == null)
+        {
+            throw new NotFoundException($"Order with ID {orderId} not found.");
+        }
+
         var order = _mapper.Map<Order>(updatedOrder);
         await _orderRepository.UpdateAsync(orderId, order, cancellationToken);
     }
 
     public async Task DeleteOrderAsync(int orderId, CancellationToken cancellationToken = default)
     {
+        var order = await _orderRepository.GetItemAsync(orderId, cancellationToken);
+
+        if (order == null)
+        {
+            throw new NotFoundException($"Order with ID {orderId} not found.");
+        }
+
         await _orderRepository.DeleteAsync(orderId, cancellationToken);
     }
 }
