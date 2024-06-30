@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Shop.Data.Interfaces;
+using Shop.Data.Repositories;
 using Shop.Exceptions;
 using Shop.Models;
 using Shop.Services.DTO;
@@ -10,6 +11,7 @@ namespace Shop.Services;
 public class OrderService : IOrderService
 {
     private readonly IRepository<Order> _orderRepository;
+    private readonly IRepository<Order> _userRepository;
     private readonly IMapper _mapper;
 
     public OrderService(IRepository<Order> orderRepository, IMapper mapper)
@@ -33,24 +35,21 @@ public class OrderService : IOrderService
     public async Task<IEnumerable<OrderDto>> GetAllOrdersAsync(CancellationToken cancellationToken = default)
     {
         var orders = await _orderRepository.GetElementsAsync(cancellationToken);
-
-        if (orders == null || !orders.Any())
-        {
-            throw new NotFoundException("No orders found.");
-        }
         return _mapper.Map<IEnumerable<OrderDto>>(orders);
     }
 
     public async Task<IEnumerable<OrderDto>> GetOrdersByUserIdAsync(int userId, CancellationToken cancellationToken = default)
     {
-        var orders = (await _orderRepository.GetElementsAsync(cancellationToken))
-            .Where(o => o.UserId == userId);
 
-        if (!orders.Any())
+        var user = (await _userRepository.GetElementsAsync(cancellationToken))
+            .FirstOrDefault(c => c.Id == userId);
+        if (user == null)
         {
-            throw new NotFoundException($"No orders found for user with ID {userId}.");
+            throw new NotFoundException($"User with ID {userId} not found.");
         }
 
+        var orders = (await _orderRepository.GetElementsAsync(cancellationToken))
+            .Where(o => o.UserId == userId);
         return _mapper.Map<IEnumerable<OrderDto>>(orders);
     }
 
@@ -65,7 +64,7 @@ public class OrderService : IOrderService
     {
         var existingOrder = await _orderRepository.GetItemAsync(orderId, cancellationToken);
 
-        if (existingOrder == null)
+        if (existingOrder is null)
         {
             throw new NotFoundException($"Order with ID {orderId} not found.");
         }
