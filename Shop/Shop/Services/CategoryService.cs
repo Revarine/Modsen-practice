@@ -38,6 +38,12 @@ public class CategoryService : ICategoryService
 
     public async Task<CategoryDto> CreateCategoryAsync(CategoryDto newCategory, CancellationToken cancellationToken = default)
     {
+        var categories = await _categoryRepository.GetElementsAsync(cancellationToken);
+        if (categories.Any(x => x.Name == newCategory.Name))
+        {
+            throw new RepeatingNameException("Names of several categories cannot be equals to each other");
+        }
+        
         var category = _mapper.Map<Category>(newCategory);
         await _categoryRepository.CreateAsync(category, cancellationToken);
         return _mapper.Map<CategoryDto>(category);
@@ -45,11 +51,15 @@ public class CategoryService : ICategoryService
 
     public async Task UpdateCategoryAsync(int categoryId, CategoryDto updatedCategory, CancellationToken cancellationToken = default)
     {
-        var existingCategory = await _categoryRepository.GetItemAsync(categoryId, cancellationToken);
-        
-        if (existingCategory == null)
+        var categories = await _categoryRepository.GetElementsAsync(cancellationToken);
+        if (!categories.Any(x => x.Id == categoryId))
         {
             throw new NotFoundException("Cannot update non-existent category");
+        }
+
+        if (categories.Any(x => x.Name == updatedCategory.Name))
+        {
+            throw new RepeatingNameException("Names of several categories cannot be equals to each other");
         }
         
         var category = _mapper.Map<Category>(updatedCategory);
