@@ -38,6 +38,18 @@ public class UserService : IUserService
 
     public async Task<UserDto> CreateUserAsync(UserDto newUser, CancellationToken cancellationToken = default)
     {
+        var existingUsers = await _userRepository.GetElementsAsync(cancellationToken);
+
+        if (existingUsers.Any(x => x.Username == newUser.Username && x.Id != newUser.Id))
+        {
+            throw new RepeatingNameException("Names of several users cannot be equals to each other");
+        }
+        
+        if (existingUsers.Any(x => x.Email == newUser.Email && x.Id != newUser.Id))
+        {
+            throw new RepeatingNameException("Emails of several users cannot be equals to each other");
+        }
+
         var user = _mapper.Map<User>(newUser);
         await _userRepository.CreateAsync(user, cancellationToken);
         return _mapper.Map<UserDto>(user);
@@ -45,11 +57,21 @@ public class UserService : IUserService
 
     public async Task UpdateUserAsync(int userId, UserDto updatedUser, CancellationToken cancellationToken = default)
     {
-        var existingUser = await _userRepository.GetItemAsync(userId, cancellationToken);
-        
-        if (existingUser == null)
+        var existingUsers = await _userRepository.GetElementsAsync(cancellationToken);
+
+        if (!existingUsers.Any(x => x.Id == updatedUser.Id))
         {
             throw new NotFoundException("Cannot update non-existent user");
+        }
+
+        if (existingUsers.Any(x => x.Username == updatedUser.Username && x.Id != updatedUser.Id))
+        {
+            throw new RepeatingNameException("Names of several users cannot be equals to each other");
+        }
+        
+        if (existingUsers.Any(x => x.Email == updatedUser.Email && x.Id != updatedUser.Id))
+        {
+            throw new RepeatingNameException("Emails of several users cannot be equals to each other");
         }
         
         var user = _mapper.Map<User>(updatedUser);
