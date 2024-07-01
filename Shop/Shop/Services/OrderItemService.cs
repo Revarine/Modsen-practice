@@ -29,7 +29,7 @@ namespace Shop.Services
         public async Task<OrderItemDto> GetOrderItemByIdAsync( int orderItemId, CancellationToken cancellationToken = default )
         {
             var orderItem = await _orderItemRepository.GetItemAsync(orderItemId, cancellationToken);
-            if (orderItem == null)
+            if (orderItem is null)
             {
                 throw new NotFoundException($"OrderItem with ID {orderItemId} not found.");
             }
@@ -57,6 +57,13 @@ namespace Shop.Services
 
         public async Task DeleteOrderItemAsync( int orderItemId, CancellationToken cancellationToken = default )
         {
+            var orderItem = await _orderItemRepository.GetItemAsync(orderItemId, cancellationToken);
+           
+            if (orderItem is null) 
+            {
+                throw new NotFoundException($"OrderItem with ID {orderItemId} not found.");
+            }
+
             await _orderItemRepository.DeleteAsync(orderItemId, cancellationToken);
         }
     }
