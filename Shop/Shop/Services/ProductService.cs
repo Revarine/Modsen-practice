@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Shop.Data.Interfaces;
-using Shop.Data.Repositories;
 using Shop.Exceptions;
 using Shop.Models;
 using Shop.Services.DTO;
@@ -24,7 +23,7 @@ namespace Shop.Services
         {
             var product = await _productRepository.GetItemAsync(productId, cancellationToken);
 
-            if (product == null)
+            if (product is null)
             {
                 throw new NotFoundException($"Product with ID {productId} not found.");
             }
@@ -43,7 +42,7 @@ namespace Shop.Services
             var category = (await _categoryRepository.GetElementsAsync(cancellationToken))
                 .FirstOrDefault(c => c.Id == categoryId);
 
-            if (category == null)
+            if (category is null)
             {
                 throw new NotFoundException($"Category with ID {categoryId} not found.");
             }

@@ -33,7 +33,7 @@ public class OrderItemRepository : IRepository<OrderItem>
     public async Task UpdateAsync(int id, OrderItem item, CancellationToken cancellationToken = default)
     {
         await _dbContext.OrderItems.Where(e => e.Id == id).ExecuteUpdateAsync
-            ( s =>
+            (s =>
                 s
                     .SetProperty(e => e.OrderId, item.OrderId)
                     .SetProperty(e => e.ProductId, item.ProductId)

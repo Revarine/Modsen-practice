@@ -1,8 +1,8 @@
-﻿namespace Shop.Services.DTO;
-
-public class OrderDto
+﻿namespace Shop.Services.DTO
 {
-    public int Id { get; set; }
-    public int UserId { get; set; }
+    public class OrderDto
+    {
+        public int Id { get; set; }
+        public int UserId { get; set; }
+    }
 }
-

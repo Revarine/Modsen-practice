@@ -15,11 +15,17 @@ builder.Services.AddDbContext<ShopDbContext>(
         options.UseSqlServer(builder.Configuration.GetConnectionString(nameof(ShopDbContext)));
     });
 
-builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IRepository<Product>, ProductRepository>();
 builder.Services.AddScoped<IRepository<Category>, CategoryRepository>();
-builder.Services.AddScoped<IOrderItemService, OrderItemService>();
+builder.Services.AddScoped<IRepository<Order>, OrderRepository>();
 builder.Services.AddScoped<IRepository<OrderItem>, OrderItemRepository>();
+builder.Services.AddScoped<IRepository<User>, UserRepository>();
+
+builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<IOrderItemService, OrderItemService>();
+builder.Services.AddScoped<IOrderService, OrderService>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddScoped<IUserService, UserService>();
 
 
 // Configure AutoMapper

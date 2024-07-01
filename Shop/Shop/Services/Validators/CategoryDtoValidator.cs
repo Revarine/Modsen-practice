@@ -1,12 +1,13 @@
 using FluentValidation;
 using Shop.Services.DTO;
 
-namespace Shop.Services.Validators;
-
-public class CategoryDtoValidator : AbstractValidator<CategoryDto>
+namespace Shop.Services.Validators
 {
-    public CategoryDtoValidator()
+    public class CategoryDtoValidator : AbstractValidator<CategoryDto>
     {
-        RuleFor(x => x.Name).NotEmpty().WithMessage("Category name cannot be empty.");
+        public CategoryDtoValidator()
+        {
+            RuleFor(x => x.Name).NotEmpty().WithMessage("Category name cannot be empty.");
+        }
     }
 }

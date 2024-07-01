@@ -1,7 +1,8 @@
-namespace Shop.Services.DTO;
-
-public class CategoryDto
+namespace Shop.Services.DTO
 {
-    public int Id { get; set; }
-    public string Name { get; set; }
+    public class CategoryDto
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+    }
 }

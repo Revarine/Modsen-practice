@@ -1,12 +1,13 @@
 ﻿using FluentValidation;
 using Shop.Services.DTO;
 
-namespace Shop.Services.Validators;
-
-public class OrderDtoValidator : AbstractValidator<OrderDto>
+namespace Shop.Services.Validators
 {
-    public OrderDtoValidator()
+    public class OrderDtoValidator : AbstractValidator<OrderDto>
     {
-        RuleFor(x => x.UserId).GreaterThan(0).WithMessage("A valid user must be associated with the order.");
+        public OrderDtoValidator()
+        {
+            RuleFor(x => x.UserId).GreaterThan(0).WithMessage("A valid user must be associated with the order.");
+        }
     }
 }

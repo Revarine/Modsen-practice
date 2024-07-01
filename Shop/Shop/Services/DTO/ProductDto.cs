@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace Shop.Services.DTO
+﻿namespace Shop.Services.DTO
 {
     public class ProductDto
     {
