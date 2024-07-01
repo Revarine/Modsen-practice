@@ -1,5 +1,7 @@
 # Modsen-practice
 
+https://learn.modsen.app/courses
+
 ### Project Conventions
 - [This](https://google.github.io/styleguide/csharp-style.html)
 - Significant folders and files names
