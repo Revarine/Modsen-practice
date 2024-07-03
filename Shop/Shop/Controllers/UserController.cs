@@ -30,5 +30,12 @@ public class UserController : ControllerBase
         }
     }
     
+    [HttpGet]
+    public async Task<ActionResult<IEnumerable<UserDto>>> GetAllUsers(CancellationToken cancellationToken = default)
+    {
+        var users = await _userService.GetAllUsersAsync(cancellationToken);
+        return Ok(users);
+    }
+    
     
 }
