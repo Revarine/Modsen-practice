@@ -50,6 +50,24 @@ public class UserController : ControllerBase
             return BadRequest(e.Message);
         }
     }
+
+    [HttpPut("{id}")]
+    public async Task<ActionResult<UserDto>> UpdateUser(int id, UserDto updatedUser, CancellationToken cancellationToken)
+    {
+        try
+        {
+            await _userService.UpdateUserAsync(id, updatedUser, cancellationToken);
+            return NoContent();
+        }
+        catch (NotFoundException e)
+        {
+            return NotFound(e.Message);
+        }
+        catch (RepeatingNameException e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
     
     
 }
