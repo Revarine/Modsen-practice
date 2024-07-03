@@ -36,6 +36,20 @@ public class UserController : ControllerBase
         var users = await _userService.GetAllUsersAsync(cancellationToken);
         return Ok(users);
     }
+
+    [HttpPost]
+    public async Task<ActionResult<UserDto>> CreateUser(UserDto newUser, CancellationToken cancellationToken = default)
+    {
+        try
+        {
+            var createdUser = await _userService.CreateUserAsync(newUser, cancellationToken);
+            return CreatedAtAction(nameof(CreateUser), new { id = createdUser.Id}, createdUser);
+        }
+        catch (RepeatingNameException e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
     
     
 }
