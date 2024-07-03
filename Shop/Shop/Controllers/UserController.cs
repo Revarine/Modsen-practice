@@ -52,7 +52,7 @@ public class UserController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public async Task<ActionResult<UserDto>> UpdateUser(int id, UserDto updatedUser, CancellationToken cancellationToken)
+    public async Task<ActionResult<UserDto>> UpdateUser(int id, UserDto updatedUser, CancellationToken cancellationToken = default)
     {
         try
         {
@@ -68,6 +68,18 @@ public class UserController : ControllerBase
             return BadRequest(e.Message);
         }
     }
-    
-    
+
+    [HttpDelete("{id}")]
+    public async Task<ActionResult<UserDto>> DeleteUser(int id, CancellationToken cancellationToken = default)
+    {
+        try
+        {
+            await _userService.DeleteUserAsync(id, cancellationToken);
+            return NoContent();
+        }
+        catch (NotFoundException e)
+        {
+            return NotFound(e.Message);
+        }
+    }
 }
