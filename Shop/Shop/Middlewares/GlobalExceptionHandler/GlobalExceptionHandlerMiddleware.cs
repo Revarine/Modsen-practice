@@ -25,7 +25,7 @@ namespace Shop.Middlewares.GlobalExceptionHandler
 
                 var errorResponse = new
                 {
-                    Message = "An error occurred.",
+                    Message = $"An error occurred. {ex.Message}",
                     ErrorCode = "InternalServerError"
                 };
 
