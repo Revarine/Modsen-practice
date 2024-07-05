@@ -15,8 +15,6 @@ builder.Services.AddDbContext<ShopDbContext>(
     {
         options.UseSqlServer(builder.Configuration.GetConnectionString(nameof(ShopDbContext)));
     });
-
-
 builder.Services.AddScoped<IRepository<Product>, ProductRepository>();
 builder.Services.AddScoped<IRepository<Category>, CategoryRepository>();
 builder.Services.AddScoped<IRepository<Order>, OrderRepository>();
@@ -30,7 +28,6 @@ builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IRegisterService, RegisterService>();
 
-
 // Configure AutoMapper
 builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddAutoMapper(cfg =>
@@ -39,6 +36,7 @@ builder.Services.AddAutoMapper(cfg =>
     cfg.CreateMap<User, UserDto>();
     cfg.CreateMap<RegisterDto, UserDto>()
         .ForMember(dest => dest.Id, opt => opt.Ignore());
+    cfg.CreateMap<UserDto, User>();
 }, typeof(Program));
 
 // Add controllers
