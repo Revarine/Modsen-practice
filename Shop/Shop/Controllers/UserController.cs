@@ -19,15 +19,8 @@ public class UserController : ControllerBase
     [HttpGet("{id}")]
     public async Task<ActionResult<UserDto>> GetUserById(int id, CancellationToken cancellationToken)
     {
-        try
-        {
             var user = await _userService.GetUserByIdAsync(id, cancellationToken);
             return Ok(user);
-        }
-        catch (NotFoundException e)
-        {
-            return NotFound(e.Message);
-        }
     }
     
     [HttpGet]
@@ -40,46 +33,21 @@ public class UserController : ControllerBase
     [HttpPost]
     public async Task<ActionResult<UserDto>> CreateUser(UserDto newUser, CancellationToken cancellationToken = default)
     {
-        try
-        {
             var createdUser = await _userService.CreateUserAsync(newUser, cancellationToken);
             return CreatedAtAction(nameof(CreateUser), new { id = createdUser.Id}, createdUser);
-        }
-        catch (RepeatingNameException e)
-        {
-            return BadRequest(e.Message);
-        }
     }
 
     [HttpPut("{id}")]
     public async Task<ActionResult<UserDto>> UpdateUser(int id, UserDto updatedUser, CancellationToken cancellationToken = default)
     {
-        try
-        {
             await _userService.UpdateUserAsync(id, updatedUser, cancellationToken);
             return NoContent();
-        }
-        catch (NotFoundException e)
-        {
-            return NotFound(e.Message);
-        }
-        catch (RepeatingNameException e)
-        {
-            return BadRequest(e.Message);
-        }
     }
 
     [HttpDelete("{id}")]
     public async Task<ActionResult<UserDto>> DeleteUser(int id, CancellationToken cancellationToken = default)
     {
-        try
-        {
             await _userService.DeleteUserAsync(id, cancellationToken);
             return NoContent();
-        }
-        catch (NotFoundException e)
-        {
-            return NotFound(e.Message);
-        }
     }
 }
