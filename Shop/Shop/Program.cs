@@ -4,6 +4,7 @@ using Shop.Data.Interfaces;
 using Shop.Data.Repositories;
 using Shop.Models;
 using Shop.Services;
+using Shop.Services.DTO;
 using Shop.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,6 +15,7 @@ builder.Services.AddDbContext<ShopDbContext>(
     {
         options.UseSqlServer(builder.Configuration.GetConnectionString(nameof(ShopDbContext)));
     });
+
 
 builder.Services.AddScoped<IRepository<Product>, ProductRepository>();
 builder.Services.AddScoped<IRepository<Category>, CategoryRepository>();
@@ -31,12 +33,29 @@ builder.Services.AddScoped<IRegisterService, RegisterService>();
 
 // Configure AutoMapper
 builder.Services.AddAutoMapper(typeof(Program));
+builder.Services.AddAutoMapper(cfg =>
+{
+    cfg.CreateMap<RegisterDto, UserDto>();
+    cfg.CreateMap<User, UserDto>();
+    cfg.CreateMap<RegisterDto, UserDto>()
+        .ForMember(dest => dest.Id, opt => opt.Ignore());
+}, typeof(Program));
+
+// Add controllers
+builder.Services.AddControllers();
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 
 app.UseHttpsRedirection();
+
+app.UseRouting();
+
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllers();
+});
 
 app.MapGet("/", () => "Hello world!");
 

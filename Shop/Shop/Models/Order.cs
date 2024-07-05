@@ -1,5 +1,5 @@
 namespace Shop.Models;
-{
+
     public class Order
 {
     public int Id { get; set; }
@@ -7,4 +7,4 @@ namespace Shop.Models;
     public virtual User User { get; set; }
     public virtual ICollection<OrderItem> OrderItems { get; set; }
 }
-}
+
