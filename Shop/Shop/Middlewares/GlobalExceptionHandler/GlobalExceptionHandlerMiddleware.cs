@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using Shop.Exceptions;
+using System.Net;
 using System.Text.Json;
 
 namespace Shop.Middlewares.GlobalExceptionHandler
@@ -19,14 +20,38 @@ namespace Shop.Middlewares.GlobalExceptionHandler
                 await _next(context);
             }
             catch (Exception ex)
-            {
-                context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+            { 
+                var statusCode = HttpStatusCode.InternalServerError;
+                var errorCode = "InternalServerError";
+
+                if (ex is ArgumentException)
+                {
+                    statusCode = HttpStatusCode.BadRequest;
+                    errorCode = "BadRequest";
+                }
+                else if (ex is UnauthorizedAccessException)
+                {
+                    statusCode = HttpStatusCode.Unauthorized;
+                    errorCode = "Unauthorized";
+                }
+                else if (ex is NotFoundException)
+                {
+                    statusCode = HttpStatusCode.NotFound;
+                    errorCode = "NotFound";
+                }
+                else if (ex is RepeatingNameException)
+                {
+                    statusCode = HttpStatusCode.Conflict;
+                    errorCode = "RepeatingName";
+                }
+
+                context.Response.StatusCode = (int)statusCode;
                 context.Response.ContentType = "application/json";
 
                 var errorResponse = new
                 {
-                    Message = $"An error occurred. {ex.Message}",
-                    ErrorCode = "InternalServerError"
+                    Message = ex.Message,
+                    ErrorCode = errorCode
                 };
 
                 var result = JsonSerializer.Serialize(errorResponse);
