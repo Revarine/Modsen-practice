@@ -19,15 +19,8 @@ public class OrderController : ControllerBase
     [HttpGet("{id}")]
     public async Task<ActionResult<OrderDto>> GetOrderById(int id, CancellationToken cancellationToken)
     {
-        try
-        {
-            var order = await _orderService.GetOrderByIdAsync(id, cancellationToken);
-            return Ok(order);
-        }
-        catch (NotFoundException e)
-        {
-            return NotFound(e.Message);
-        }
+        var order = await _orderService.GetOrderByIdAsync(id, cancellationToken);
+        return Ok(order);
     }
 
     [HttpGet]
@@ -38,48 +31,25 @@ public class OrderController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<OrderDto>> CreateOrder(OrderDto newOrder, CancellationToken cancellationToken = default)
+    public async Task<ActionResult<OrderDto>> CreateOrder(OrderDto newOrder,
+        CancellationToken cancellationToken = default)
     {
-        try
-        {
-            var createdOrder = await _orderService.CreateOrderAsync(newOrder, cancellationToken);
-            return CreatedAtAction(nameof(CreateOrder), new { id = createdOrder.Id}, createdOrder);
-        }
-        catch (RepeatingNameException e)
-        {
-            return BadRequest(e.Message);
-        }
+        var createdOrder = await _orderService.CreateOrderAsync(newOrder, cancellationToken);
+        return CreatedAtAction(nameof(CreateOrder), new { id = createdOrder.Id }, createdOrder);
     }
 
     [HttpPut("{id}")]
-    public async Task<ActionResult<OrderDto>> UpdateOrder(int id, OrderDto updatedOrder, CancellationToken cancellationToken = default)
+    public async Task<ActionResult<OrderDto>> UpdateOrder(int id, OrderDto updatedOrder,
+        CancellationToken cancellationToken = default)
     {
-        try
-        {
-            await _orderService.UpdateOrderAsync(id, updatedOrder, cancellationToken);
-            return NoContent();
-        }
-        catch (NotFoundException e)
-        {
-            return NotFound(e.Message);
-        }
-        catch (RepeatingNameException e)
-        {
-            return BadRequest(e.Message);
-        }
+        await _orderService.UpdateOrderAsync(id, updatedOrder, cancellationToken);
+        return NoContent();
     }
 
     [HttpDelete("{id}")]
     public async Task<ActionResult<OrderDto>> DeleteOrder(int id, CancellationToken cancellationToken = default)
     {
-        try
-        {
-            await _orderService.DeleteOrderAsync(id, cancellationToken);
-            return NoContent();
-        }
-        catch (NotFoundException e)
-        {
-            return NotFound(e.Message);
-        }
+        await _orderService.DeleteOrderAsync(id, cancellationToken);
+        return NoContent();
     }
 }
