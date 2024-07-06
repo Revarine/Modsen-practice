@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Shop.Data;
 using Shop.Data.Interfaces;
 using Shop.Data.Repositories;
+using Shop.Middlewares.GlobalExceptionHandler;
 using Shop.Models;
 using Shop.Services;
 using Shop.Services.DTO;
@@ -45,8 +46,8 @@ builder.Services.AddControllers();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-
 app.UseHttpsRedirection();
+
 
 app.UseRouting();
 
@@ -54,6 +55,8 @@ app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllers();
 });
+// Configure global exception handler
+app.UseGlobalExceptionHandler();
 
 app.MapGet("/", () => "Hello world!");
 
