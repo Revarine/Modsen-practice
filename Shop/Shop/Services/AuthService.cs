@@ -27,21 +27,26 @@ public class AuthService : IAuthService
     public async Task<string> AuthenticateAsync( LoginDto loginDto, CancellationToken cancellationToken = default )
     {
         var user = (await _userRepository.GetElementsAsync(cancellationToken))
-                    .FirstOrDefault(u => u.Username == loginDto.Username && u.Password == loginDto.Password);
+                        .FirstOrDefault(u => u.Username == loginDto.Username && u.Password == loginDto.Password);
 
         if (user is null)
         {
             throw new UnauthorizedAccessException("Invalid username or password.");
         }
 
+        return GenerateJwtToken(user);
+    }
+
+    private string GenerateJwtToken( User user )
+    {
         var tokenHandler = new JwtSecurityTokenHandler();
         var key = Encoding.ASCII.GetBytes(_configuration["Jwt:Key"]);
         var tokenDescriptor = new SecurityTokenDescriptor
         {
             Subject = new ClaimsIdentity(new Claim[]
             {
-                new Claim(ClaimTypes.Name, user.Id.ToString()),
-                new Claim(ClaimTypes.NameIdentifier, user.Username)
+                    new Claim(ClaimTypes.Name, user.Id.ToString()),
+                    new Claim(ClaimTypes.NameIdentifier, user.Username)
             }),
             Expires = DateTime.UtcNow.AddDays(7),
             SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
