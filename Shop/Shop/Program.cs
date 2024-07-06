@@ -1,4 +1,6 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Shop.Data;
 using Shop.Data.Interfaces;
 using Shop.Data.Repositories;
@@ -7,6 +9,7 @@ using Shop.Models;
 using Shop.Services;
 using Shop.Services.DTO;
 using Shop.Services.Interfaces;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,6 +30,8 @@ builder.Services.AddScoped<IOrderItemService, OrderItemService>();
 builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IUserService, UserService>();
+
+builder.Services.AddScoped<IAuthService, AuthService>();  
 builder.Services.AddScoped<IRegisterService, RegisterService>();
 
 // Configure AutoMapper
@@ -43,11 +48,33 @@ builder.Services.AddAutoMapper(cfg =>
 // Add controllers
 builder.Services.AddControllers();
 
+// Configure JWT authentication
+var key = Encoding.ASCII.GetBytes(builder.Configuration["Jwt:Key"]);
+
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(options =>
+{
+    options.RequireHttpsMetadata = false;
+    options.SaveToken = true;
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(key),
+        ValidateIssuer = false,
+        ValidateAudience = false
+    };
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 app.UseHttpsRedirection();
 
+app.UseAuthentication(); 
+app.UseAuthorization();  
 
 app.UseRouting();
 
@@ -57,6 +84,7 @@ app.UseEndpoints(endpoints =>
 });
 // Configure global exception handler
 app.UseGlobalExceptionHandler();
+
 
 app.MapGet("/", () => "Hello world!");
 
