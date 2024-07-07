@@ -1,13 +1,12 @@
-﻿using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
-using Microsoft.Extensions.Configuration;
+﻿using AutoMapper;
+using DataAccess.Data.Interfaces;
+using DataAccess.Models;
 using Microsoft.IdentityModel.Tokens;
-using Shop.Data.Interfaces;
-using Shop.Models;
 using Shop.Services.DTO;
 using Shop.Services.Interfaces;
-using AutoMapper;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 
 namespace Shop.Services;
 
@@ -17,14 +16,14 @@ public class AuthService : IAuthService
     private readonly IMapper _mapper;
     private readonly IConfiguration _configuration;
 
-    public AuthService( IRepository<User> userRepository, IMapper mapper, IConfiguration configuration )
+    public AuthService(IRepository<User> userRepository, IMapper mapper, IConfiguration configuration)
     {
         _userRepository = userRepository;
         _mapper = mapper;
         _configuration = configuration;
     }
 
-    public async Task<string> AuthenticateAsync( LoginDto loginDto, CancellationToken cancellationToken = default )
+    public async Task<string> AuthenticateAsync(LoginDto loginDto, CancellationToken cancellationToken = default)
     {
         var user = (await _userRepository.GetElementsAsync(cancellationToken))
                         .FirstOrDefault(u => u.Username == loginDto.Username && u.Password == loginDto.Password);
@@ -37,7 +36,7 @@ public class AuthService : IAuthService
         return GenerateJwtToken(user);
     }
 
-    private string GenerateJwtToken( User user )
+    private string GenerateJwtToken(User user)
     {
         var tokenHandler = new JwtSecurityTokenHandler();
         var key = Encoding.ASCII.GetBytes(_configuration["Jwt:Key"]);

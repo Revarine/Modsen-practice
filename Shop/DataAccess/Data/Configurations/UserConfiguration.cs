@@ -8,6 +8,8 @@ namespace DataAccess.Data.Configurations
     {
         public void Configure(EntityTypeBuilder<User> builder)
         {
+            builder.ToTable("Users");
+
             builder.HasKey(e => e.Id);
 
             builder

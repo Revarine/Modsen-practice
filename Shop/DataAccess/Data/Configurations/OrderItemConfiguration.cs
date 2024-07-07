@@ -8,6 +8,8 @@ namespace DataAccess.Data.Configurations
     {
         public void Configure(EntityTypeBuilder<OrderItem> builder)
         {
+            builder.ToTable("OrderItems");
+
             builder.HasKey(e => e.Id);
     
             builder

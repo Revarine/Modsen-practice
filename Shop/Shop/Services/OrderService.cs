@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using Shop.Data.Interfaces;
+using DataAccess.Data.Interfaces;
+using DataAccess.Models;
 using Shop.Exceptions;
-using Shop.Models;
 using Shop.Services.DTO;
 using Shop.Services.Interfaces;
 

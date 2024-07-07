@@ -1,7 +1,7 @@
 using AutoMapper;
-using Shop.Data.Interfaces;
+using DataAccess.Data.Interfaces;
+using DataAccess.Models;
 using Shop.Exceptions;
-using Shop.Models;
 using Shop.Services.DTO;
 using Shop.Services.Interfaces;
 
@@ -17,7 +17,7 @@ namespace Shop.Services
             _userRepository = userRepository;
             _mapper = mapper;
         }
-    
+
         public async Task<UserDto> GetUserByIdAsync(int userId, CancellationToken cancellationToken = default)
         {
             var user = await _userRepository.GetItemAsync(userId, cancellationToken);
@@ -44,7 +44,7 @@ namespace Shop.Services
             {
                 throw new RepeatingNameException("Names of several users cannot be equals to each other");
             }
-        
+
             if (existingUsers.Any(x => x.Email == newUser.Email && x.Id != newUser.Id))
             {
                 throw new RepeatingNameException("Emails of several users cannot be equals to each other");
@@ -68,25 +68,25 @@ namespace Shop.Services
             {
                 throw new RepeatingNameException("Names of several users cannot be equals to each other");
             }
-        
+
             if (existingUsers.Any(x => x.Email == updatedUser.Email && x.Id != updatedUser.Id))
             {
                 throw new RepeatingNameException("Emails of several users cannot be equals to each other");
             }
-        
+
             var user = _mapper.Map<User>(updatedUser);
             await _userRepository.UpdateAsync(userId, user, cancellationToken);
         }
-    
+
         public async Task DeleteUserAsync(int userId, CancellationToken cancellationToken = default)
         {
             var existingUser = await _userRepository.GetItemAsync(userId, cancellationToken);
-        
+
             if (existingUser is null)
             {
                 throw new NotFoundException("Cannot delete non-existent user");
             }
-        
+
             await _userRepository.DeleteAsync(userId, cancellationToken);
         }
     }
