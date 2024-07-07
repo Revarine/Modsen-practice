@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Shop.Services.DTO;
-using Shop.Services.Interfaces;
+﻿using BusinessLogic.Services.DTO;
+using BusinessLogic.Services.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Shop.Controllers;
 
@@ -18,9 +18,9 @@ public class RegisterController : ControllerBase
     [HttpPost]
     public async Task<ActionResult<UserDto>> RegisterUser(RegisterDto registerDto, CancellationToken cancellationToken = default)
     {
-       
+
         var userDto = await _registerService.RegisterUserAsync(registerDto, cancellationToken);
         return CreatedAtAction(nameof(RegisterUser), userDto);
-       
+
     }
 }

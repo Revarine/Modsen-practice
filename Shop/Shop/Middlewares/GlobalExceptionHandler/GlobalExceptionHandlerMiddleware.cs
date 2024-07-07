@@ -1,4 +1,4 @@
-﻿using Shop.Exceptions;
+﻿using BusinessLogic.Exceptions;
 using System.Net;
 using System.Text.Json;
 
@@ -20,7 +20,7 @@ namespace Shop.Middlewares.GlobalExceptionHandler
                 await _next(context);
             }
             catch (Exception ex)
-            { 
+            {
                 var statusCode = HttpStatusCode.InternalServerError;
                 var errorCode = "InternalServerError";
 

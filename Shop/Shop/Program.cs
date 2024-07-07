@@ -1,3 +1,6 @@
+using BusinessLogic.Services;
+using BusinessLogic.Services.DTO;
+using BusinessLogic.Services.Interfaces;
 using DataAccess.Data;
 using DataAccess.Data.Interfaces;
 using DataAccess.Data.Repositories;
@@ -6,9 +9,6 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Shop.Middlewares.GlobalExceptionHandler;
-using Shop.Services;
-using Shop.Services.DTO;
-using Shop.Services.Interfaces;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
