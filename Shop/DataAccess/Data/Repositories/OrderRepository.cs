@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Shop.Data.Interfaces;
-using Shop.Models;
+using DataAccess.Data.Interfaces;
+using DataAccess.Models;
 
-namespace Shop.Data.Repositories
+namespace DataAccess.Data.Repositories
 {
     public class OrderRepository : IRepository<Order>
     {
