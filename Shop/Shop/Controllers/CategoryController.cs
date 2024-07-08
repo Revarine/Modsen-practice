@@ -1,7 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Shop.Exceptions;
-using Shop.Services.DTO;
-using Shop.Services.Interfaces;
+﻿using BusinessLogic.Services.DTO;
+using BusinessLogic.Services.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Shop.Controllers
 {

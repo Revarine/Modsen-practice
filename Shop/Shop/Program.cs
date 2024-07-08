@@ -1,14 +1,14 @@
+using BusinessLogic.Services;
+using BusinessLogic.Services.DTO;
+using BusinessLogic.Services.Interfaces;
+using DataAccess.Data;
+using DataAccess.Data.Interfaces;
+using DataAccess.Data.Repositories;
+using DataAccess.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using Shop.Data;
-using Shop.Data.Interfaces;
-using Shop.Data.Repositories;
 using Shop.Middlewares.GlobalExceptionHandler;
-using Shop.Models;
-using Shop.Services;
-using Shop.Services.DTO;
-using Shop.Services.Interfaces;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -19,6 +19,7 @@ builder.Services.AddDbContext<ShopDbContext>(
     {
         options.UseSqlServer(builder.Configuration.GetConnectionString(nameof(ShopDbContext)));
     });
+
 builder.Services.AddScoped<IRepository<Product>, ProductRepository>();
 builder.Services.AddScoped<IRepository<Category>, CategoryRepository>();
 builder.Services.AddScoped<IRepository<Order>, OrderRepository>();
@@ -31,7 +32,7 @@ builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IUserService, UserService>();
 
-builder.Services.AddScoped<IAuthService, AuthService>();  
+builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IRegisterService, RegisterService>();
 
 // Configure AutoMapper
@@ -73,8 +74,8 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 app.UseHttpsRedirection();
 
-app.UseAuthentication(); 
-app.UseAuthorization();  
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.UseRouting();
 

@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Shop.Services.DTO;
-using Shop.Services.Interfaces;
+﻿using BusinessLogic.Services.DTO;
+using BusinessLogic.Services.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Shop.Controllers;
 
@@ -10,13 +10,13 @@ public class AuthController : ControllerBase
 {
     private readonly IAuthService _authService;
 
-    public AuthController( IAuthService authService )
+    public AuthController(IAuthService authService)
     {
         _authService = authService;
     }
 
     [HttpPost("login")]
-    public async Task<IActionResult> Login( [FromBody] LoginDto loginDto, CancellationToken cancellationToken = default )
+    public async Task<IActionResult> Login([FromBody] LoginDto loginDto, CancellationToken cancellationToken = default)
     {
         try
         {

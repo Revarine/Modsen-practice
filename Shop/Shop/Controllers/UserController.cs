@@ -1,7 +1,6 @@
+using BusinessLogic.Services.DTO;
+using BusinessLogic.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using Shop.Exceptions;
-using Shop.Services.DTO;
-using Shop.Services.Interfaces;
 
 namespace Shop.Controllers;
 
@@ -19,10 +18,10 @@ public class UserController : ControllerBase
     [HttpGet("{id}")]
     public async Task<ActionResult<UserDto>> GetUserById(int id, CancellationToken cancellationToken)
     {
-            var user = await _userService.GetUserByIdAsync(id, cancellationToken);
-            return Ok(user);
+        var user = await _userService.GetUserByIdAsync(id, cancellationToken);
+        return Ok(user);
     }
-    
+
     [HttpGet]
     public async Task<ActionResult<IEnumerable<UserDto>>> GetAllUsers(CancellationToken cancellationToken = default)
     {
@@ -33,21 +32,21 @@ public class UserController : ControllerBase
     [HttpPost]
     public async Task<ActionResult<UserDto>> CreateUser(UserDto newUser, CancellationToken cancellationToken = default)
     {
-            var createdUser = await _userService.CreateUserAsync(newUser, cancellationToken);
-            return CreatedAtAction(nameof(CreateUser), new { id = createdUser.Id}, createdUser);
+        var createdUser = await _userService.CreateUserAsync(newUser, cancellationToken);
+        return CreatedAtAction(nameof(CreateUser), new { id = createdUser.Id }, createdUser);
     }
 
     [HttpPut("{id}")]
     public async Task<ActionResult<UserDto>> UpdateUser(int id, UserDto updatedUser, CancellationToken cancellationToken = default)
     {
-            await _userService.UpdateUserAsync(id, updatedUser, cancellationToken);
-            return NoContent();
+        await _userService.UpdateUserAsync(id, updatedUser, cancellationToken);
+        return NoContent();
     }
 
     [HttpDelete("{id}")]
     public async Task<ActionResult<UserDto>> DeleteUser(int id, CancellationToken cancellationToken = default)
     {
-            await _userService.DeleteUserAsync(id, cancellationToken);
-            return NoContent();
+        await _userService.DeleteUserAsync(id, cancellationToken);
+        return NoContent();
     }
 }
