@@ -1,13 +1,5 @@
-/calculator/calculator/.vs
-/calculator/calculator/.idea
-/calculator/calculator/*/bin
-/calculator/calculator/*/obj
+﻿################################################################################
+# Данный GITIGNORE-файл был автоматически создан Microsoft(R) Visual Studio.
+################################################################################
 
-/.vs/slnx.sqlite
-/.vs/Modsen-practice/FileContentIndex
-/.vs/Modsen-practice/v17
 /.vs
-
-[Bb]in/
-[Oo]bj/
-[Ll]og/
